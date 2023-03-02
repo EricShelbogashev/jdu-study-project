@@ -1,7 +1,13 @@
 package ru.nsu.fit.shelbogashev.studyProjects;
 
 import org.apache.commons.cli.*;
-import ru.nsu.fit.shelbogashev.studyProjects.model.Jdu;
+import ru.nsu.fit.shelbogashev.studyProjects.model.jdu.Jdu;
+import ru.nsu.fit.shelbogashev.studyProjects.model.jdu.Tree;
+import ru.nsu.fit.shelbogashev.studyProjects.utils.JduPrinterCmdDu;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
 
 public class Main {
     public static void main(String[] args) {
@@ -9,8 +15,8 @@ public class Main {
         Jdu jdu = Jdu.getInstance();
         try {
             CommandLine cmd = parser.parse(jdu.getOptions(), args);
-            jdu.execute(cmd);
-        } catch (ParseException e) {
+            jdu.load(cmd).print(new JduPrinterCmdDu(48));
+        } catch (ParseException | URISyntaxException | IOException e) {
             HelpFormatter formatter = new HelpFormatter();
             formatter.printHelp("jdu", jdu.getOptions());
         }
