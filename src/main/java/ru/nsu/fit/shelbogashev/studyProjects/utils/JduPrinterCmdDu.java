@@ -1,16 +1,17 @@
 package ru.nsu.fit.shelbogashev.studyProjects.utils;
 
 import ru.nsu.fit.shelbogashev.studyProjects.model.jdu.Jdu;
+import ru.nsu.fit.shelbogashev.studyProjects.model.jdu.Node;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Formatter;
 
 public class JduPrinterCmdDu implements JduPrinter {
-
-    private final int align;
+    private final long align;
+    private static final long DEFAULT_ALIGN = 128;
     public JduPrinterCmdDu() {
-        this.align = 128;
+        this.align = DEFAULT_ALIGN;
     }
 
     public JduPrinterCmdDu(int align) {
@@ -18,20 +19,20 @@ public class JduPrinterCmdDu implements JduPrinter {
     }
 
     @Override
-    public void print(OutputStream stream, Jdu.JduNode root) {
-        if (root.getChildren() == null) return;
+    public void print(OutputStream stream, Node root) {
+        if (root.children() == null) return;
         Formatter formatter = new Formatter();
         try {
             stream.write(
                     formatter.format(
                             "%-" + align + "s %6d\n",
-                            root.getPath(),
-                            root.getSize()).toString().getBytes()
+                            root.path(),
+                            root.size()).toString().getBytes()
             );
         } catch (IOException e) {
 //                throw new RuntimeException(e);
         }
-        for (Jdu.JduNode node : root.getChildren()) {
+        for (Node node : root.children()) {
             print(stream, node);
         }
     }

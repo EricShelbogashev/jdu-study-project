@@ -1,30 +1,63 @@
 package ru.nsu.fit.shelbogashev.studyProjects.model.jdu.node;
 
-import ru.nsu.fit.shelbogashev.studyProjects.model.jdu.FileSystemUnit;
-import ru.nsu.fit.shelbogashev.studyProjects.model.jdu.Node;
+import ru.nsu.fit.shelbogashev.studyProjects.model.jdu.*;
+import ru.nsu.fit.shelbogashev.studyProjects.model.jdu.exception.NodeRefreshException;
 
+import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.TreeSet;
+import java.util.HashSet;
 
-@FileSystemUnit
-public class DirectoryNode implements Node {
-    @Override
-    public Path path() {
-        return null;
+@Order
+@NodeHandler
+public class DirectoryNode extends AbstractNode {
+
+    @FabricMethod
+    public DirectoryNode createDirectory(Path path, Node parent) {
+        if (!Files.isDirectory(path)) return null;
+        return new DirectoryNode(path, parent);
+    }
+
+    protected DirectoryNode(Path path, Node parent) {
+        super(path, parent);
     }
 
     @Override
     public String type() {
-        return null;
+        return "directory";
     }
 
     @Override
-    public TreeSet<Node> children() {
-        return null;
+    public void refreshChildren() throws NodeRefreshException {
+        HashSet<Node> refreshedChildren = new HashSet<>();
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(this.path())) {
+            for (Path p : stream) {
+                Node node = NodeFactory.instance().get(p, this);
+                if (node != null) {
+                    refreshedChildren.add(node);
+                }
+            }
+            this.children = refreshedChildren;
+            this.isRelativeSize = true;
+        } catch (IOException e) {
+            throw new NodeRefreshException(e);
+        }
     }
 
     @Override
-    public long lastRefresh() {
-        return 0;
+    public void refreshSize() throws NodeRefreshException {
+        if (!this.isRelativeSize()) return;
+
+        size = 0;
+        for (Node child : this.children) {
+            child.refreshSize();
+            size += child.size();
+            if (child.isRelativeSize()) {
+                this.isRelativeSize = true;
+            }
+        }
     }
+
 }
+

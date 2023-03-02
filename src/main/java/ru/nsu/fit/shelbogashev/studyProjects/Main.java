@@ -2,12 +2,10 @@ package ru.nsu.fit.shelbogashev.studyProjects;
 
 import org.apache.commons.cli.*;
 import ru.nsu.fit.shelbogashev.studyProjects.model.jdu.Jdu;
-import ru.nsu.fit.shelbogashev.studyProjects.model.jdu.Tree;
 import ru.nsu.fit.shelbogashev.studyProjects.utils.JduPrinterCmdDu;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.file.Paths;
 
 public class Main {
     public static void main(String[] args) {
