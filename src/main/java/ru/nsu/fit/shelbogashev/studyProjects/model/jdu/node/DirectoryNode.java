@@ -14,7 +14,7 @@ import java.util.HashSet;
 public class DirectoryNode extends AbstractNode {
 
     @FabricMethod
-    public DirectoryNode createDirectory(Path path, Node parent) {
+    public static DirectoryNode createDirectory(Path path, Node parent) {
         if (!Files.isDirectory(path)) return null;
         return new DirectoryNode(path, parent);
     }
@@ -48,6 +48,9 @@ public class DirectoryNode extends AbstractNode {
     @Override
     public void refreshSize() throws NodeRefreshException {
         if (!this.isRelativeSize()) return;
+        if (this.children == null) {
+            refreshChildren();
+        }
 
         size = 0;
         for (Node child : this.children) {

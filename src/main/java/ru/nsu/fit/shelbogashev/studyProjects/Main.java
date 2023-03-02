@@ -13,7 +13,7 @@ public class Main {
         Jdu jdu = Jdu.getInstance();
         try {
             CommandLine cmd = parser.parse(jdu.getOptions(), args);
-            jdu.load(cmd).print(new JduPrinterCmdDu(48));
+            jdu.load(cmd).print(new JduPrinterCmdDu());
         } catch (ParseException | URISyntaxException | IOException e) {
             HelpFormatter formatter = new HelpFormatter();
             formatter.printHelp("jdu", jdu.getOptions());

@@ -8,7 +8,7 @@ public class FileSystemUnitPredicate implements Predicate<Class<?>> {
 
     @Override
     public boolean test(Class<?> aClass) {
-        if (!Arrays.asList(aClass.getInterfaces()).contains(Node.class)) return false;
+        if (!Node.class.isAssignableFrom(aClass)) return false;
         Annotation[] annotations = aClass.getAnnotations();
         if (Arrays.stream(annotations).noneMatch(it -> it.annotationType() == NodeHandler.class)) return false;
         // TODO: проверить, какие аннотации выводятся.

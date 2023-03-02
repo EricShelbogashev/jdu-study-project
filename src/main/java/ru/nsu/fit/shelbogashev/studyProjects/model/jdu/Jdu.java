@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 
 public final class Jdu {
     private static Jdu INSTANCE;
@@ -34,12 +35,14 @@ public final class Jdu {
     public Jdu load(@NotNull CommandLine commandLine) throws URISyntaxException, IOException, IllegalArgumentException {
         JduCommandLineValidator.validate(commandLine);
 
-        Path rootPath = commandLine.getArgs() == null ? Paths.get(commandLine.getArgs()[0]) : Paths.get(".");
+        Path rootPath = commandLine.getArgs().length != 0 ? Paths.get(commandLine.getArgs()[0]) : Paths.get(".");
 
         NodeFactory nodeFactory = NodeFactory.instance();
-        ReflectionUtils.getClassesForPackage(Jdu.class.getPackageName(), new FileSystemUnitPredicate()).forEach(
-                it -> nodeFactory.registerNodeHandler((Class<Node>) it)
-        );
+
+        for (Class<?> unit : ReflectionUtils.getClassesForPackage(Jdu.class.getPackageName(), new FileSystemUnitPredicate())) {
+            nodeFactory.registerNodeHandler((Class<Node>) unit);
+        }
+
         root = NodeFactory.instance().get(rootPath, null);
         root.refreshAllSilent();
         return this;

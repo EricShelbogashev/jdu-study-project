@@ -13,15 +13,6 @@ public class JduCommandLineValidator {
         if (len > 1) {
             throw new IllegalArgumentException("too much arguments");
         }
-        if (len == 1) {
-            Path path = Path.of(commandLine.getArgList().get(0));
-            if (!Files.isDirectory(path)) {
-                throw new IllegalArgumentException("expected directory");
-            }
-            if (Files.notExists(path)) {
-                throw new IllegalArgumentException("path is not exists");
-            }
-        }
 
         try {
             if (commandLine.hasOption("depth")) {
