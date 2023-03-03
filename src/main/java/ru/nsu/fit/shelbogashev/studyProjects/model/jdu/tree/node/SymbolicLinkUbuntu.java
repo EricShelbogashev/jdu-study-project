@@ -1,32 +1,30 @@
-package ru.nsu.fit.shelbogashev.studyProjects.model.jdu.node;
+package ru.nsu.fit.shelbogashev.studyProjects.model.jdu.tree.node;
 
 import ru.nsu.fit.shelbogashev.studyProjects.model.jdu.exception.NodeRefreshException;
-import ru.nsu.fit.shelbogashev.studyProjects.model.jdu.tree.AbstractNode;
-import ru.nsu.fit.shelbogashev.studyProjects.model.jdu.tree.FabricMethod;
-import ru.nsu.fit.shelbogashev.studyProjects.model.jdu.tree.Node;
-import ru.nsu.fit.shelbogashev.studyProjects.model.jdu.tree.NodeHandler;
+import ru.nsu.fit.shelbogashev.studyProjects.model.jdu.tree.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Date;
 
+@Order
 @NodeHandler
-public class RegularFileNode extends AbstractNode {
+public class SymbolicLinkUbuntu extends AbstractNode {
 
     @FabricMethod
-    public static RegularFileNode createRegularFileNode(Path path, Node parent) {
-        if (!Files.isRegularFile(path)) return null;
-        return new RegularFileNode(path, parent);
+    public static SymbolicLinkUbuntu createRegularFileNode(Path path, Node parent) {
+        if (!Files.isSymbolicLink(path)) return null;
+        return new SymbolicLinkUbuntu(path, parent);
     }
 
-    protected RegularFileNode(Path path, Node parent) {
+    protected SymbolicLinkUbuntu(Path path, Node parent) {
         super(path, parent);
     }
 
     @Override
     public String type() {
-        return "regular file";
+        return "ubuntu symbolic link";
     }
 
     @Override

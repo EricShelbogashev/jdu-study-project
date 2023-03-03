@@ -49,12 +49,13 @@ public final class Jdu {
 
         root = NodeFactory.instance().get(rootPath, null);
         root.refreshAllSilent();
+//        root.refreshAll();
         return this;
     }
 
     public void print(JduPrinter printer) {
         if (root != null) {
-            long depth = -1;
+            long depth = DEFAULT_DEPTH;
             if (commandLine != null) {
                 depth = commandLine.hasOption("depth") ? Long.parseLong(commandLine.getOptionValue("depth")) : depth;
             }

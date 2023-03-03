@@ -1,4 +1,4 @@
-package ru.nsu.fit.shelbogashev.studyProjects.model.jdu.node;
+package ru.nsu.fit.shelbogashev.studyProjects.model.jdu.tree.node;
 
 import ru.nsu.fit.shelbogashev.studyProjects.model.jdu.exception.NodeRefreshException;
 import ru.nsu.fit.shelbogashev.studyProjects.model.jdu.tree.*;

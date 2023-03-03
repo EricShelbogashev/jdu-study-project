@@ -8,5 +8,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Order {
-    int order() default Integer.MAX_VALUE;
+    int order() default 0;
 }
