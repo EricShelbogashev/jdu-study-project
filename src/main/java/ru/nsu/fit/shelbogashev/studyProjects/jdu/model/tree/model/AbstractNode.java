@@ -1,7 +1,8 @@
-package ru.nsu.fit.shelbogashev.studyProjects.model.jdu.tree;
+package ru.nsu.fit.shelbogashev.studyProjects.jdu.model.tree.model;
 
 import org.jetbrains.annotations.NotNull;
-import ru.nsu.fit.shelbogashev.studyProjects.model.jdu.exception.NodeRefreshException;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.model.exception.NodeRefreshException;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.model.tree.api.Node;
 
 import java.nio.file.Path;
 import java.util.Collection;
@@ -9,9 +10,9 @@ import java.util.Date;
 import java.util.Formatter;
 
 public abstract class AbstractNode implements Node {
-    protected Collection<Node> children;
     protected final Node parent;
     protected final Path path;
+    protected Collection<Node> children;
     protected boolean isRelativeSize;
     protected long size;
     protected long lastRefresh;

@@ -1,4 +1,7 @@
-package ru.nsu.fit.shelbogashev.studyProjects.model.jdu.tree;
+package ru.nsu.fit.shelbogashev.studyProjects.jdu.model.tree.validation;
+
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.model.tree.api.Node;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.model.tree.api.NodeHandler;
 
 import java.lang.annotation.Annotation;
 import java.util.Arrays;

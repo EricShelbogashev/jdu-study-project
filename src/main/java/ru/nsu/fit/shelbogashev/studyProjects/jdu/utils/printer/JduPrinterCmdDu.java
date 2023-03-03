@@ -1,14 +1,15 @@
-package ru.nsu.fit.shelbogashev.studyProjects.utils.printer;
+package ru.nsu.fit.shelbogashev.studyProjects.jdu.utils.printer;
 
-import ru.nsu.fit.shelbogashev.studyProjects.model.jdu.tree.Node;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.model.tree.api.Node;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Formatter;
 
 public class JduPrinterCmdDu implements JduPrinter {
-    private final long align;
     private static final long DEFAULT_PATH_ALIGN = 128;
+    private final long align;
+
     public JduPrinterCmdDu() {
         this(DEFAULT_PATH_ALIGN);
     }
@@ -30,7 +31,8 @@ public class JduPrinterCmdDu implements JduPrinter {
                             root.isRelativeSize() ? "*" : "",
                             root.type()).toString().getBytes()
             );
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+        }
         if (root.children() == null) return;
         for (Node node : root.children().stream().sorted().toList()) {
             print(stream, node, depth - 1);

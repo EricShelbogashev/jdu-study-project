@@ -1,7 +1,12 @@
-package ru.nsu.fit.shelbogashev.studyProjects.model.jdu.tree.node;
+package ru.nsu.fit.shelbogashev.studyProjects.jdu.model.tree.model;
 
-import ru.nsu.fit.shelbogashev.studyProjects.model.jdu.exception.NodeRefreshException;
-import ru.nsu.fit.shelbogashev.studyProjects.model.jdu.tree.*;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.model.exception.NodeRefreshException;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.model.tree.api.Node;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.model.tree.api.NodeHandler;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.model.tree.fabric.FactoryContext;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.model.tree.fabric.FactoryMethod;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.model.tree.fabric.NodeFactory;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.model.tree.fabric.Order;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
@@ -13,14 +18,14 @@ import java.util.HashSet;
 @NodeHandler
 public class DirectoryNode extends AbstractNode {
 
-    @FabricMethod
-    public static DirectoryNode createDirectory(Path path, Node parent) {
-        if (!Files.isDirectory(path)) return null;
-        return new DirectoryNode(path, parent);
-    }
-
     protected DirectoryNode(Path path, Node parent) {
         super(path, parent);
+    }
+
+    @FactoryMethod
+        public static DirectoryNode createDirectory(Path path, Node parent, FactoryContext context) {
+        if (!Files.isDirectory(path)) return null;
+        return new DirectoryNode(path, parent);
     }
 
     @Override

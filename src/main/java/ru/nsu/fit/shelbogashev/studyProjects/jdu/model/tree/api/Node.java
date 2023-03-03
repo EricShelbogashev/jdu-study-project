@@ -1,6 +1,6 @@
-package ru.nsu.fit.shelbogashev.studyProjects.model.jdu.tree;
+package ru.nsu.fit.shelbogashev.studyProjects.jdu.model.tree.api;
 
-import ru.nsu.fit.shelbogashev.studyProjects.model.jdu.exception.NodeRefreshException;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.model.exception.NodeRefreshException;
 
 import java.nio.file.Path;
 import java.util.Collection;

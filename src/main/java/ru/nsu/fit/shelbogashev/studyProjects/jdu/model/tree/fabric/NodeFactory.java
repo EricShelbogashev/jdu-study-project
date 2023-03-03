@@ -1,6 +1,7 @@
-package ru.nsu.fit.shelbogashev.studyProjects.model.jdu.tree;
+package ru.nsu.fit.shelbogashev.studyProjects.jdu.model.tree.fabric;
 
-import ru.nsu.fit.shelbogashev.studyProjects.model.jdu.exception.NodeFactoryException;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.model.tree.api.Node;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.model.exception.NodeFactoryException;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
@@ -9,12 +10,10 @@ import java.nio.file.Path;
 import java.util.*;
 
 public class NodeFactory {
-    public final Collection<Pair> units;
-    private static NodeFactory INSTANCE;
     private static final Package SEARCH_PACKAGE = NodeFactory.class.getPackage();
-
-    private record Pair(Method method, int order) {
-    }
+    private static NodeFactory INSTANCE;
+    public final Collection<Pair> units;
+    private FactoryContext context = null;
 
     private NodeFactory() {
         units = new TreeSet<>(new Comparator<Pair>() {
@@ -23,7 +22,7 @@ public class NodeFactory {
                 if (o2.order == o1.order) {
                     if (o1.equals(o2)) return 0;
                     return 1;
-                };
+                }
                 return o2.order - o1.order;
             }
         });
@@ -39,7 +38,7 @@ public class NodeFactory {
     /* Можно ли как-нибудь сделать конфигурацию path, но спрятать этот метод? */
     public void registerNodeHandler(Class<? extends Node> handler) {
         Optional<Method> fabricMethod = Arrays.stream(handler.getDeclaredMethods()).filter(
-                it -> it.isAnnotationPresent(FabricMethod.class)
+                it -> it.isAnnotationPresent(FactoryMethod.class)
         ).findAny();
 
         if (fabricMethod.isEmpty()) {
@@ -48,9 +47,9 @@ public class NodeFactory {
             );
         }
 
-        Method method = null;
+        Method method;
         try {
-            method = handler.getDeclaredMethod(fabricMethod.get().getName(), Path.class, Node.class);
+            method = handler.getDeclaredMethod(fabricMethod.get().getName(), Path.class, Node.class, FactoryContext.class);
         } catch (NoSuchMethodException e) {
             throw new NodeFactoryException(e);
         }
@@ -64,17 +63,25 @@ public class NodeFactory {
         units.add(new Pair(method, order));
     }
 
+    public NodeFactory setContext(FactoryContext context) {
+        this.context = context;
+        return this;
+    }
+
     public Node get(Path path, Node parent) {
-        for (Pair pair: units) {
+        for (Pair pair : units) {
             Node node = null;
             try {
-                node = (Node) pair.method.invoke(null, path, parent);
-            } catch (IllegalAccessException | InvocationTargetException ignored ) {
+                node = (Node) pair.method.invoke(null, path, parent, this.context);
+            } catch (IllegalAccessException | InvocationTargetException ignored) {
             }
             if (node != null) {
                 return node;
             }
         }
         throw new NodeFactoryException("undefined path reference");
+    }
+
+    private record Pair(Method method, int order) {
     }
 }

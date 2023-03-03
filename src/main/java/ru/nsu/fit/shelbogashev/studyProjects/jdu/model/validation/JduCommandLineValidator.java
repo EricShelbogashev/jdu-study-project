@@ -1,10 +1,6 @@
-package ru.nsu.fit.shelbogashev.studyProjects.validation;
+package ru.nsu.fit.shelbogashev.studyProjects.jdu.model.validation;
 
 import org.apache.commons.cli.CommandLine;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Arrays;
 
 public class JduCommandLineValidator {
     public static void validate(CommandLine commandLine) throws IllegalArgumentException {

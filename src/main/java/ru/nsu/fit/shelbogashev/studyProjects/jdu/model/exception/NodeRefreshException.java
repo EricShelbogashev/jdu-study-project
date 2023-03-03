@@ -1,4 +1,4 @@
-package ru.nsu.fit.shelbogashev.studyProjects.model.jdu.exception;
+package ru.nsu.fit.shelbogashev.studyProjects.jdu.model.exception;
 
 public class NodeRefreshException extends RuntimeException {
     public NodeRefreshException(Throwable exception) {

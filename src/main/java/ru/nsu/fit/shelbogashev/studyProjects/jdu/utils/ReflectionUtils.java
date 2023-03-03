@@ -1,4 +1,4 @@
-package ru.nsu.fit.shelbogashev.studyProjects.utils;
+package ru.nsu.fit.shelbogashev.studyProjects.jdu.utils;
 
 import java.io.IOException;
 import java.net.URI;

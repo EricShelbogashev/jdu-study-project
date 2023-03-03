@@ -1,8 +1,8 @@
-package ru.nsu.fit.shelbogashev.studyProjects;
+package ru.nsu.fit.shelbogashev.studyProjects.jdu;
 
 import org.apache.commons.cli.*;
-import ru.nsu.fit.shelbogashev.studyProjects.model.jdu.Jdu;
-import ru.nsu.fit.shelbogashev.studyProjects.utils.printer.JduPrinterCmdDu;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.model.Jdu;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.utils.printer.JduPrinterCmdDu;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
