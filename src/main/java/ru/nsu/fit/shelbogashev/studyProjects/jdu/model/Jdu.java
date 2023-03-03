@@ -6,18 +6,16 @@ import org.jetbrains.annotations.NotNull;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.model.tree.fabric.FactoryContext;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.model.tree.fabric.NodeFactory;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.model.tree.api.Node;
-import ru.nsu.fit.shelbogashev.studyProjects.jdu.model.tree.model.SymbolicLinkBehaviour;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.model.tree.api.SymbolicLinkBehaviour;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.model.tree.validation.FileSystemUnitPredicate;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.utils.ReflectionUtils;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.utils.printer.JduPrinter;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.model.validation.JduCommandLineValidator;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
 
 public final class Jdu {
     private static final long DEFAULT_DEPTH = 16;
