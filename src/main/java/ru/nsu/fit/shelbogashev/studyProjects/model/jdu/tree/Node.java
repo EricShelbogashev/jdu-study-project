@@ -1,11 +1,11 @@
-package ru.nsu.fit.shelbogashev.studyProjects.model.jdu;
+package ru.nsu.fit.shelbogashev.studyProjects.model.jdu.tree;
 
 import ru.nsu.fit.shelbogashev.studyProjects.model.jdu.exception.NodeRefreshException;
 
 import java.nio.file.Path;
 import java.util.Collection;
 
-public interface Node {
+public interface Node extends Comparable<Node> {
     Path path();
 
     String type();

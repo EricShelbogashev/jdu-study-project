@@ -1,4 +1,4 @@
-package ru.nsu.fit.shelbogashev.studyProjects.model.jdu;
+package ru.nsu.fit.shelbogashev.studyProjects.model.jdu.tree;
 
 import java.lang.annotation.Annotation;
 import java.util.Arrays;

@@ -1,10 +1,12 @@
-package ru.nsu.fit.shelbogashev.studyProjects.model.jdu;
+package ru.nsu.fit.shelbogashev.studyProjects.model.jdu.tree;
 
+import org.jetbrains.annotations.NotNull;
 import ru.nsu.fit.shelbogashev.studyProjects.model.jdu.exception.NodeRefreshException;
 
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Formatter;
 
 public abstract class AbstractNode implements Node {
     protected Collection<Node> children;
@@ -77,5 +79,19 @@ public abstract class AbstractNode implements Node {
     @Override
     public boolean equals(Object obj) {
         return super.equals(obj);
+    }
+
+    @Override
+    public String toString() {
+        return (new Formatter()).format(
+                "[%6d]" + " ".repeat(this.path().getNameCount() * 2) + "%s\n",
+                this.size,
+                this.path().getName(this.path().getNameCount() - 1)
+        ).toString();
+    }
+
+    @Override
+    public int compareTo(@NotNull Node o) {
+        return (int) (o.size() - this.size);
     }
 }

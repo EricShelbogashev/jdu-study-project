@@ -1,7 +1,7 @@
 package ru.nsu.fit.shelbogashev.studyProjects.model.jdu.node;
 
-import ru.nsu.fit.shelbogashev.studyProjects.model.jdu.*;
 import ru.nsu.fit.shelbogashev.studyProjects.model.jdu.exception.NodeRefreshException;
+import ru.nsu.fit.shelbogashev.studyProjects.model.jdu.tree.*;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
@@ -53,6 +53,7 @@ public class DirectoryNode extends AbstractNode {
         }
 
         size = 0;
+        isRelativeSize = false;
         for (Node child : this.children) {
             child.refreshSize();
             size += child.size();
@@ -62,5 +63,9 @@ public class DirectoryNode extends AbstractNode {
         }
     }
 
+    @Override
+    public String toString() {
+        return path.getName(path.getNameCount() - 1).toString();
+    }
 }
 

@@ -2,7 +2,7 @@ package ru.nsu.fit.shelbogashev.studyProjects;
 
 import org.apache.commons.cli.*;
 import ru.nsu.fit.shelbogashev.studyProjects.model.jdu.Jdu;
-import ru.nsu.fit.shelbogashev.studyProjects.utils.JduPrinterCmdDu;
+import ru.nsu.fit.shelbogashev.studyProjects.utils.printer.JduPrinterCmdDu;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
