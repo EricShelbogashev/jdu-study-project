@@ -1,4 +1,4 @@
-package ru.nsu.fit.shelbogashev.studyProjects.jdu.utils.printer;
+package ru.nsu.fit.shelbogashev.studyProjects.jdu.utils.printer.model;
 
 public class Limit {
     public static Limit UNLIMITED = new Limit(Long.MAX_VALUE);

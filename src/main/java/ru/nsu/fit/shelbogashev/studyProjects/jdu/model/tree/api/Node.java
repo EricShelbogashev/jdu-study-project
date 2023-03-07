@@ -10,30 +10,27 @@ public interface Node extends Comparable<Node> {
 
     String type();
 
-    Collection<Node> children();
-
     Node parent();
 
     boolean isRelativeSize();
-
-    void refreshChildren() throws NodeRefreshException;
-
-    void refreshSize() throws NodeRefreshException;
-
-    void refreshAll() throws NodeRefreshException;
-
-    void refreshAllSilent();
 
     long lastRefresh();
 
     long size();
 
-    @Override
     String toString();
 
-    @Override
     public int hashCode();
 
-    @Override
     public boolean equals(Object o);
+
+    void refreshChildren() throws NodeRefreshException;
+
+    void refreshSize() throws NodeRefreshException;
+
+    Collection<Node> children();
+
+    void refreshAll() throws NodeRefreshException;
+
+    void refreshAllSilent();
 }

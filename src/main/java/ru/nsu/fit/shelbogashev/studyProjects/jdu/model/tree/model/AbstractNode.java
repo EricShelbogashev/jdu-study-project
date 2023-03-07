@@ -33,7 +33,7 @@ public abstract class AbstractNode implements Node {
 
     @Override
     public Collection<Node> children() {
-        return children;
+        return this.children;
     }
 
     public boolean isRelativeSize() {

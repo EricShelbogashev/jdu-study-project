@@ -10,13 +10,18 @@ import ru.nsu.fit.shelbogashev.studyProjects.jdu.model.tree.fabric.NodeFactory;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.model.tree.validation.FileSystemUnitPredicate;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.model.validation.JduCommandLineValidator;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.utils.ReflectionUtils;
-import ru.nsu.fit.shelbogashev.studyProjects.jdu.utils.printer.JduPrinter;
-import ru.nsu.fit.shelbogashev.studyProjects.jdu.utils.printer.Limit;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.utils.filter.api.TreeFilter;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.utils.filter.model.TreeFilterDepth;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.utils.filter.model.TreeFilterLimit;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.utils.printer.api.JduPrinter;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.utils.filter.model.FilterNode;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public final class Jdu {
     private static final long DEFAULT_DEPTH = 16;
@@ -61,19 +66,39 @@ public final class Jdu {
 
         root = JduTree.of(rootPath).setContext(context).build();
         root.refreshAllSilent();
-//        root.refreshAll();
+
+        ArrayList<TreeFilter> filters = new ArrayList<>();
+        if (commandLine.hasOption("depth")) {
+            filters.add(
+                    new TreeFilterDepth(Long.parseLong(commandLine.getOptionValue("depth")))
+            );
+        }
+        if (commandLine.hasOption("limit")) {
+            filters.add(
+                    new TreeFilterLimit(Long.parseLong(commandLine.getOptionValue("limit")))
+            );
+        }
+        this.filter(filters);
         return this;
+    }
+
+    /***
+     * Must be ordered.
+     * @param filters
+     */
+    private void filter(Collection<TreeFilter> filters) {
+        if (root != null) {
+            FilterNode rootWrapper = FilterNode.of(root);
+            for (TreeFilter filter : filters) {
+                filter.apply(rootWrapper);
+            }
+            root = rootWrapper;
+        }
     }
 
     public void print(JduPrinter printer) {
         if (root != null) {
-            long depth = DEFAULT_DEPTH;
-            long limit = DEFAULT_LIMIT;
-            if (commandLine != null) {
-                depth = commandLine.hasOption("depth") ? Long.parseLong(commandLine.getOptionValue("depth")) : depth;
-                limit = commandLine.hasOption("limit") ? Long.parseLong(commandLine.getOptionValue("limit")) : limit;
-            }
-            printer.print(System.out, root, depth, Limit.of(limit));
+            printer.printAll(System.out, root);
         }
     }
 
