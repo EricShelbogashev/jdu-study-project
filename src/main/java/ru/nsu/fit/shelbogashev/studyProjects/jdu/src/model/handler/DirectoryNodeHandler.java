@@ -15,6 +15,7 @@ public class DirectoryNodeHandler implements NodeHandler {
     @Override
     public Node createNode(Path path, Collection<NodeView> children, NodeFactoryContext context, ExceptionTracer exceptionTracer) {
         if (!Files.isDirectory(path)) return null;
+        if (Files.isSymbolicLink(path)) return null;
         return new DirectoryNode(path, children);
     }
 }

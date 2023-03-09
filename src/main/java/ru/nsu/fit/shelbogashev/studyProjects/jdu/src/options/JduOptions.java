@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Nullable;
 import java.nio.file.Path;
 
 /**
- * Individual Option could be null, but Options must not be null.
+ * Command line options wrapper for jdu. Represents features of jdu.
  */
 public class JduOptions {
     private static String USAGE_MESSAGE;

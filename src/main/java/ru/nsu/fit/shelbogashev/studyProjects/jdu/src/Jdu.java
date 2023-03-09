@@ -1,17 +1,18 @@
 package ru.nsu.fit.shelbogashev.studyProjects.jdu.src;
 
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.NodeViewTree;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.NodeViewTreeBuilder;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.factory.NodeFactoryContext;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.filter.JduTreeFilterDepth;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.filter.JduTreeFilterLimit;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.node.NodeView;
-import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.printer.JduTreePrinterFlat;
-import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.printer.JduTreePrinter;
-import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.printer.JduTreePrinterTree;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.printer.NodeViewTreePrinter;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.printer.NodeViewTreePrinterTree;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.size.SizeFormatterIEC;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.options.JduOptions;
 
 import java.io.OutputStream;
+import java.util.Arrays;
 
 public final class Jdu {
     JduOptions options;
@@ -24,14 +25,19 @@ public final class Jdu {
         renderTo(System.out);
     }
 
+    /**
+     * Prints the filesystem fingerprint to the stream.
+     * @param stream    Stream to output the fingerprint in string format.
+     */
     public void renderTo(OutputStream stream) {
         NodeFactoryContext context = new NodeFactoryContext(options);
-        NodeView tree = NodeViewTreeBuilder.of(options.getPath())
+        NodeViewTree tree = NodeViewTreeBuilder.of(options.getPath())
                 .setContext(context)
                 .build();
-        if (options.getDepth() != null) tree = new JduTreeFilterDepth(options.getDepth()).apply(tree);
-        if (options.getLimit() != null) tree = new JduTreeFilterLimit(options.getLimit()).apply(tree);
-        JduTreePrinter printer = new JduTreePrinterTree(new SizeFormatterIEC());
-        printer.printTo(stream, tree);
+        NodeView root = tree.root();
+        if (options.getDepth() != null) root = new JduTreeFilterDepth(options.getDepth()).apply(root);
+        if (options.getLimit() != null) root = new JduTreeFilterLimit(options.getLimit()).apply(root);
+        NodeViewTreePrinter printer = new NodeViewTreePrinterTree(new SizeFormatterIEC());
+        printer.printTo(stream, root);
     }
 }

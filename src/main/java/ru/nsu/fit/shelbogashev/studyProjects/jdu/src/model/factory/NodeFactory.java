@@ -5,6 +5,7 @@ import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.node.Node;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.node.NodeView;
 
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.TreeSet;
 
@@ -18,7 +19,7 @@ public class NodeFactory {
                 if (handler1.equals(handler2)) return 0;
                 return 1;
             }
-            return handler2.order() - handler1.order();
+            return handler1.order() - handler2.order();
         });
         this.context = context;
         this.units.addAll(configuration.handlers());

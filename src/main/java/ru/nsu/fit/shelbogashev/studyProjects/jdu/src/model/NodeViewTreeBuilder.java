@@ -30,7 +30,7 @@ public class NodeViewTreeBuilder {
         return this;
     }
 
-    public NodeView build() {
+    public NodeViewTree build() {
         ExceptionTracerImpl tracer = new ExceptionTracerImpl();
         NodeFactoryConfiguration configuration = new NodeFactoryConfiguration(Arrays.asList(
                 new DirectoryNodeHandler(),
@@ -38,7 +38,8 @@ public class NodeViewTreeBuilder {
                 new SymbolicLinkNodeHandler()
         ));
         NodeFactory factory = new NodeFactory(configuration, context);
-        return buildRecursively(root, factory, tracer);
+        NodeView treeRoot = buildRecursively(root, factory, tracer);
+        return new NodeViewTree(treeRoot, tracer);
     }
 
     private NodeView buildRecursively(Path path, NodeFactory factory, ExceptionTracer tracer) {

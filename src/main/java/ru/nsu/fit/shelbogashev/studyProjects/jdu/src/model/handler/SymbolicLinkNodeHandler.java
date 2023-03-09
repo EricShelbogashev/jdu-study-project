@@ -28,4 +28,9 @@ public class SymbolicLinkNodeHandler implements NodeHandler {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public int order() {
+        return 0;
+    }
 }

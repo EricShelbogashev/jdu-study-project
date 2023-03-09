@@ -77,13 +77,15 @@ public class JduOptionsBuilder {
                 CommandLine commandLine = this.parser.parse(JduOptions.commandLineOptions(), args);
                 if (commandLine.getArgList().size() == 1) {
                     this.path = Path.of(commandLine.getArgList().get(0));
+                } else if (commandLine.getArgList().size() == 0) {
+                    this.path = DEFAULT_PATH;
                 } else {
                     throw new IllegalArgumentException("Too much directory arguments");
                 }
                 if (commandLine.hasOption("depth")) this.depth = Integer.parseInt(commandLine.getOptionValue("depth"));
                 if (commandLine.hasOption("L")) this.symbolicLinkFollow = Boolean.TRUE;
                 if (commandLine.hasOption("limit")) this.limit = Integer.parseInt(commandLine.getOptionValue("limit"));
-            } catch (ParseException | NumberFormatException e) {
+            } catch (ParseException | IllegalArgumentException e) {
                 throw new JduOptionsException(e);
             }
         }

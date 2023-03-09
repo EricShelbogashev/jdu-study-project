@@ -7,10 +7,10 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Formatter;
 
-public class JduTreePrinterFlat extends AbstractJduTreePrinter {
+public class NodeViewTreePrinterFlat extends AbstractNodeViewTreePrinter {
     private final SizeFormatter sizeFormatter;
 
-    public JduTreePrinterFlat(SizeFormatter formatter) {
+    public NodeViewTreePrinterFlat(SizeFormatter formatter) {
         this.sizeFormatter = formatter;
     }
 
