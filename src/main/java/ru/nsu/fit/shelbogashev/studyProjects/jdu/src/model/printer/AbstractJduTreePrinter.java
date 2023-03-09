@@ -6,7 +6,7 @@ import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.printer.exception.Jdu
 import java.io.IOException;
 import java.io.OutputStream;
 
-public abstract class AbstractJduTreePrinter extends JduTreePrinter {
+public abstract class AbstractJduTreePrinter implements JduTreePrinter {
     protected static final long DEFAULT_PATH_ALIGN = 128;
     protected final long align;
 
@@ -19,7 +19,7 @@ public abstract class AbstractJduTreePrinter extends JduTreePrinter {
     }
 
     @Override
-    void printTo(OutputStream stream, NodeView root) throws JduTreePrinterException {
+    public void printTo(OutputStream stream, NodeView root) throws JduTreePrinterException {
         printRecursive(stream, root);
     }
 

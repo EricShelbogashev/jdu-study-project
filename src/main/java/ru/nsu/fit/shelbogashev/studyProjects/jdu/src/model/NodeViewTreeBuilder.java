@@ -44,7 +44,7 @@ public class NodeViewTreeBuilder {
 
     private NodeView buildRecursively(Path path, NodeFactory factory, ExceptionTracer tracer) {
         ArrayList<NodeView> children = null;
-        try (DirectoryStream<Path> stream = Files.newDirectoryStream(root)) {
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(path)) {
             children = new ArrayList<>();
             for (Path childPath : stream) {
                 NodeView child = buildRecursively(childPath, factory, tracer);
