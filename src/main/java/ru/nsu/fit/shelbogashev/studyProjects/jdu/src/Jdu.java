@@ -12,7 +12,6 @@ import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.size.SizeFormatterIEC
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.options.JduOptions;
 
 import java.io.OutputStream;
-import java.util.Arrays;
 
 public final class Jdu {
     JduOptions options;
@@ -27,7 +26,8 @@ public final class Jdu {
 
     /**
      * Prints the filesystem fingerprint to the stream.
-     * @param stream    Stream to output the fingerprint in string format.
+     *
+     * @param stream Stream to output the fingerprint in string format.
      */
     public void renderTo(OutputStream stream) {
         NodeFactoryContext context = new NodeFactoryContext(options);

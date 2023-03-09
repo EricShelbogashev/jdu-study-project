@@ -5,7 +5,6 @@ import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.node.Node;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.node.NodeView;
 
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.TreeSet;
 
