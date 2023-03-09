@@ -1,5 +1,6 @@
 package ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.handler;
 
+import org.jetbrains.annotations.NotNull;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.factory.ExceptionTracer;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.factory.NodeFactoryContext;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.factory.NodeHandler;
@@ -14,10 +15,8 @@ import java.nio.file.Path;
 import java.util.Collection;
 
 public class SymbolicLinkNodeHandler implements NodeHandler {
-    static SymbolicLinkBehavior DEFAULT_BEHAVIOR = SymbolicLinkBehavior.LIKE_A_FILE;
-
     @Override
-    public Node createNode(Path path, Collection<NodeView> children, NodeFactoryContext context, ExceptionTracer exceptionTracer) {
+    public Node createNode(@NotNull Path path, Collection<NodeView> children, NodeFactoryContext context, @NotNull ExceptionTracer exceptionTracer) {
         if (!Files.isSymbolicLink(path)) return null;
         try {
             SymbolicLinkBehavior behavior = Boolean.TRUE.equals(context.jduOptions().getSymbolicLinkFollow())

@@ -4,6 +4,9 @@ import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.node.NodeView;
 
 import java.util.List;
 
+/**
+ * Sorts the child nodes of the node in descending order and leaves limit - the rest are deleted.
+ */
 public class JduTreeFilterLimit implements JduTreeFilter {
     private final int limit;
 

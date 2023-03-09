@@ -2,6 +2,9 @@ package ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.filter;
 
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.node.NodeView;
 
+/**
+ * Removes tree nodes that are more than {@code depth} from the root.
+ */
 public class JduTreeFilterDepth implements JduTreeFilter {
     private final int depth;
 

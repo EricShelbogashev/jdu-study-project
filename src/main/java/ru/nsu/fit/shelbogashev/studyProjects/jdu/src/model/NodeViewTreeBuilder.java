@@ -1,5 +1,7 @@
 package ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.factory.*;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.handler.DirectoryNodeHandler;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.handler.RegularFileNodeHandler;
@@ -17,19 +19,25 @@ public class NodeViewTreeBuilder {
     private final Path root;
     private NodeFactoryContext context = null;
 
-    private NodeViewTreeBuilder(Path root) {
+    private NodeViewTreeBuilder(@NotNull Path root) {
         this.root = root;
     }
 
-    public static NodeViewTreeBuilder of(Path path) {
+    @NotNull
+    public static NodeViewTreeBuilder of(@NotNull Path path) {
         return new NodeViewTreeBuilder(path);
     }
 
-    public NodeViewTreeBuilder setContext(NodeFactoryContext context) {
+    @NotNull
+    public NodeViewTreeBuilder setContext(@Nullable NodeFactoryContext context) {
         this.context = context;
         return this;
     }
 
+    /**
+     * Creates a tree, each node of which describes a unit of the file system.
+     * @return tree wrapper that stores errors that occurred during its creation.
+     */
     public NodeViewTree build() {
         ExceptionTracerImpl tracer = new ExceptionTracerImpl();
         NodeFactoryConfiguration configuration = new NodeFactoryConfiguration(Arrays.asList(
@@ -48,9 +56,7 @@ public class NodeViewTreeBuilder {
             children = new ArrayList<>();
             for (Path childPath : stream) {
                 NodeView child = buildRecursively(childPath, factory, tracer);
-                if (child != null) {
-                    children.add(child);
-                }
+                children.add(child);
             }
         } catch (IOException ignored) {
         }

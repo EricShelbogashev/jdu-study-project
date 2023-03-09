@@ -7,6 +7,10 @@ import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Objects;
 
+/**
+ * Implements the core functionality of the Node.
+ * It is necessary to redefine the type for {@link NodeView#type()} and add a {@link ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.factory.NodeHandler handler} for this node.
+ */
 public abstract class AbstractNode implements Node {
     protected Path path;
     protected Boolean isRelativeSize;

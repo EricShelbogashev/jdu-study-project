@@ -14,10 +14,20 @@ public abstract class AbstractNodeViewTreePrinter implements NodeViewTreePrinter
         this(DEFAULT_PATH_ALIGN);
     }
 
+    /**
+     * @param align a padding between certain node attributes.
+     *              Each formatter is defined separately.
+     */
     public AbstractNodeViewTreePrinter(long align) {
         this.align = align;
     }
 
+    /**
+     * Prints the tree to the stream using special formatting.
+     * @param stream    where will the tree be displayed.
+     * @param root      tree root.
+     * @throws NodeViewTreePrinterException if stream is invalid.
+     */
     @Override
     public void printTo(OutputStream stream, NodeView root) throws NodeViewTreePrinterException {
         printRecursive(stream, root);
@@ -35,5 +45,11 @@ public abstract class AbstractNodeViewTreePrinter implements NodeViewTreePrinter
         }
     }
 
+    /**
+     * Outputs a single node representation to the stream.
+     * @param stream    will take a String representation of the node.
+     * @param node      node for printing.
+     * @throws IOException  if stream is invalid.
+     */
     abstract public void printNode(OutputStream stream, NodeView node) throws IOException;
 }

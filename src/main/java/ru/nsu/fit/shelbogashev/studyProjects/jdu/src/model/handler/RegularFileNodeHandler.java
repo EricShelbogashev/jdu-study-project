@@ -1,9 +1,9 @@
 package ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.handler;
 
+import org.jetbrains.annotations.NotNull;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.factory.ExceptionTracer;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.factory.NodeFactoryContext;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.factory.NodeHandler;
-import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.factory.Order;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.node.Node;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.node.NodeView;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.node.RegularFileNode;
@@ -16,9 +16,8 @@ import java.util.Collection;
 
 public class RegularFileNodeHandler implements NodeHandler {
 
-    @Order(order = 0)
     @Override
-    public Node createNode(Path path, Collection<NodeView> children, NodeFactoryContext context, ExceptionTracer exceptionTracer) {
+    public Node createNode(@NotNull Path path, Collection<NodeView> children, NodeFactoryContext context, @NotNull ExceptionTracer exceptionTracer) {
         if (!Files.isRegularFile(path)) return null;
         try {
             return new RegularFileNode(path, children);
