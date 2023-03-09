@@ -37,7 +37,6 @@ public class NodeViewTreeBuilder {
                 new RegularFileNodeHandler(),
                 new SymbolicLinkNodeHandler()
         ));
-        // TODO: some actions.
         NodeFactory factory = new NodeFactory(configuration, context);
         return buildRecursively(root, factory, tracer);
     }
@@ -54,6 +53,11 @@ public class NodeViewTreeBuilder {
             }
         } catch (IOException ignored) {
         }
-        return factory.get(path, children, tracer);
+        try {
+            return factory.get(path.toRealPath(), children, tracer);
+        } catch (IOException e) {
+            tracer.put(e);
+            return factory.get(path, children, tracer);
+        }
     }
 }

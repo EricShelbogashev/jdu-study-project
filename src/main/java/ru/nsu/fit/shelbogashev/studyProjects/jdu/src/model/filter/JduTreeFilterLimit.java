@@ -19,8 +19,11 @@ public class JduTreeFilterLimit implements JduTreeFilter {
 
     protected void cutTreeByChildCount(NodeView root) {
         if (root.children() == null) return;
+        for (NodeView child : root.children()) {
+            cutTreeByChildCount(child);
+        }
         List<NodeView> newChildren = root.children().stream().sorted().toList();
-        if (newChildren.size() > limit) newChildren = newChildren.subList(0, limit - 1);
+        if (newChildren.size() > limit) newChildren = newChildren.subList(0, limit);
         root.children().clear();
         root.children().addAll(newChildren);
     }

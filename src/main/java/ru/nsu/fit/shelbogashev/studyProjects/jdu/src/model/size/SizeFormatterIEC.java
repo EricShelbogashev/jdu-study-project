@@ -15,6 +15,6 @@ public class SizeFormatterIEC implements SizeFormatter {
     }
 
     private static String getFormatString(double value, String suffix) {
-        return String.format("%10.2f %s", value, suffix);
+        return String.format("%.2f %s", value, suffix);
     }
 }

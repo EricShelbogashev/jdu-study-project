@@ -23,7 +23,7 @@ public abstract class AbstractJduTreePrinter implements JduTreePrinter {
         printRecursive(stream, root);
     }
 
-    private void printRecursive(OutputStream stream, NodeView root) throws JduTreePrinterException {
+    protected void printRecursive(OutputStream stream, NodeView root) throws JduTreePrinterException {
         try {
             printNode(stream, root);
         } catch (IOException e) {

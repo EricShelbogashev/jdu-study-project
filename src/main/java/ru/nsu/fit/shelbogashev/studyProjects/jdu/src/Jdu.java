@@ -7,6 +7,7 @@ import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.filter.JduTreeFilterL
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.node.NodeView;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.printer.JduTreePrinterFlat;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.printer.JduTreePrinter;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.printer.JduTreePrinterTree;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.size.SizeFormatterIEC;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.options.JduOptions;
 
@@ -30,7 +31,7 @@ public final class Jdu {
                 .build();
         if (options.getDepth() != null) tree = new JduTreeFilterDepth(options.getDepth()).apply(tree);
         if (options.getLimit() != null) tree = new JduTreeFilterLimit(options.getLimit()).apply(tree);
-        JduTreePrinter printer = new JduTreePrinterFlat(new SizeFormatterIEC());
+        JduTreePrinter printer = new JduTreePrinterTree(new SizeFormatterIEC());
         printer.printTo(stream, tree);
     }
 }
