@@ -15,7 +15,7 @@ public class JduOptionsBuilder {
     public static Integer DEFAULT_DEPTH = Integer.MAX_VALUE;
     public static Integer DEFAULT_LIMIT = Integer.MAX_VALUE;
     public static Boolean DEFAULT_SYMBOLIC_LINK_FOLLOW = Boolean.FALSE;
-    public static Path DEFAULT_PATH = Path.of(System.getProperty("user.dir"));
+    public static Path DEFAULT_PATH = Path.of(".");
 
     public String[] args;
     public CommandLineParser parser;
