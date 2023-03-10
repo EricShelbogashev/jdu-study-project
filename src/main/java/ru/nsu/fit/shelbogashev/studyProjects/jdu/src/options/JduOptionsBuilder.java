@@ -12,7 +12,7 @@ import java.nio.file.Path;
 
 public class JduOptionsBuilder {
     public static DefaultParser DEFAULT_PARSER = new DefaultParser();
-    public static Integer DEFAULT_DEPTH = Integer.MAX_VALUE;
+    public static Integer DEFAULT_DEPTH = 64;
     public static Integer DEFAULT_LIMIT = Integer.MAX_VALUE;
     public static Boolean DEFAULT_SYMBOLIC_LINK_FOLLOW = Boolean.FALSE;
     public static Path DEFAULT_PATH = Path.of(".");

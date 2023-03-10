@@ -18,6 +18,8 @@ import java.util.Arrays;
 public class NodeViewTreeBuilder {
     private final Path root;
     private NodeFactoryContext context = null;
+    private int depth;
+    private static final int DEFAULT_DEPTH = 64;
 
     private NodeViewTreeBuilder(@NotNull Path root) {
         this.root = root;
@@ -36,6 +38,7 @@ public class NodeViewTreeBuilder {
 
     /**
      * Creates a tree, each node of which describes a unit of the file system.
+     *
      * @return tree wrapper that stores errors that occurred during its creation.
      */
     public NodeViewTree build() {
@@ -46,17 +49,25 @@ public class NodeViewTreeBuilder {
                 new SymbolicLinkNodeHandler()
         ));
         NodeFactory factory = new NodeFactory(configuration, context);
+        depth = context.jduOptions().getDepth() == null ? DEFAULT_DEPTH : context.jduOptions().getDepth();
         NodeView treeRoot = buildRecursively(root, factory, tracer);
         return new NodeViewTree(treeRoot, tracer);
     }
 
     private NodeView buildRecursively(Path path, NodeFactory factory, ExceptionTracer tracer) {
+        return buildRecursively(path, factory, tracer, 0);
+    }
+
+    private NodeView buildRecursively(Path path, NodeFactory factory, ExceptionTracer tracer, int currentDepth) {
+        if (currentDepth == depth) return null;
         ArrayList<NodeView> children = null;
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(path)) {
             children = new ArrayList<>();
             for (Path childPath : stream) {
-                NodeView child = buildRecursively(childPath, factory, tracer);
-                children.add(child);
+                NodeView child = buildRecursively(childPath, factory, tracer, currentDepth + 1);
+                if (child != null) {
+                    children.add(child);
+                }
             }
         } catch (IOException ignored) {
         }
