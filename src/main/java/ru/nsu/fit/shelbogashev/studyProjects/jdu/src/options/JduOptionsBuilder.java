@@ -35,7 +35,8 @@ public class JduOptionsBuilder {
 
     /**
      * Used for initialization by command line input.
-     * @param args  flags and values from {@link JduOptions#usage()}.
+     *
+     * @param args flags and values from {@link JduOptions#usage()}.
      * @return this.
      */
     @SuppressWarnings("unused")
@@ -57,7 +58,7 @@ public class JduOptionsBuilder {
     }
 
     /**
-     * @param parser    parser to use to interpret input from {@link JduOptionsBuilder#byArgs(String[])}
+     * @param parser parser to use to interpret input from {@link JduOptionsBuilder#byArgs(String[])}
      * @return this.
      */
     @SuppressWarnings("unused")
@@ -79,7 +80,7 @@ public class JduOptionsBuilder {
     }
 
     /**
-     * @param symbolicLinkFollow    whether there will be child directories of symbolic links in the render.
+     * @param symbolicLinkFollow whether there will be child directories of symbolic links in the render.
      * @return this.
      */
     @SuppressWarnings("unused")
@@ -102,8 +103,8 @@ public class JduOptionsBuilder {
 
     /**
      * @return {@link JduOptions}   instance with data entered by the user.
-     *                      Anything not entered is filled in with default values.
-     * @throws JduOptionsException  wrapper for all sorts of internal errors.
+     * Anything not entered is filled in with default values.
+     * @throws JduOptionsException wrapper for all sorts of internal errors.
      */
     @SuppressWarnings("unused")
     @NotNull

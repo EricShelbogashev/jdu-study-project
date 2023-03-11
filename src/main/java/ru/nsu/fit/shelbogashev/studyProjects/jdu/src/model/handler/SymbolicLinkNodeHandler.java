@@ -24,7 +24,8 @@ public class SymbolicLinkNodeHandler implements NodeHandler {
                     : SymbolicLinkBehavior.LIKE_A_FILE;
             return new SymbolicLinkNode(path, children, behavior);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            exceptionTracer.put(e);
+            return null;
         }
     }
 

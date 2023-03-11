@@ -16,6 +16,7 @@ public class NodeFactory {
 
     /**
      * Factory for creating {@link NodeViewTree#root()} nodes.
+     *
      * @param configuration supplies node handlers.
      * @param context       supplies jdu options for node creation specification.
      */
@@ -33,9 +34,10 @@ public class NodeFactory {
 
     /**
      * Returns a node if there is a handler capable of creating it.
-     * @param path              the path to which the node will be bound.
-     * @param children          child nodes of the node. Must be initialized or null.
-     * @param exceptionTracer   storage for errors that may occur during the creation process.
+     *
+     * @param path            the path to which the node will be bound.
+     * @param children        child nodes of the node. Must be initialized or null.
+     * @param exceptionTracer storage for errors that may occur during the creation process.
      * @return node describing the given path.
      * @throws NodeFactoryException if a handler for creating a node was not found.
      */

@@ -24,8 +24,9 @@ public abstract class AbstractNodeViewTreePrinter implements NodeViewTreePrinter
 
     /**
      * Prints the tree to the stream using special formatting.
-     * @param stream    where will the tree be displayed.
-     * @param root      tree root.
+     *
+     * @param stream where will the tree be displayed.
+     * @param root   tree root.
      * @throws NodeViewTreePrinterException if stream is invalid.
      */
     @Override
@@ -47,9 +48,10 @@ public abstract class AbstractNodeViewTreePrinter implements NodeViewTreePrinter
 
     /**
      * Outputs a single node representation to the stream.
-     * @param stream    will take a String representation of the node.
-     * @param node      node for printing.
-     * @throws IOException  if stream is invalid.
+     *
+     * @param stream will take a String representation of the node.
+     * @param node   node for printing.
+     * @throws IOException if stream is invalid.
      */
     abstract public void printNode(OutputStream stream, NodeView node) throws IOException;
 }

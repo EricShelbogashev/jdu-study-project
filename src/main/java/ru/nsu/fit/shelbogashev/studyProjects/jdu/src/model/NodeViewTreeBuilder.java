@@ -11,15 +11,16 @@ import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.node.NodeView;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class NodeViewTreeBuilder {
+    private static final int DEFAULT_DEPTH = 64;
     private final Path root;
     private NodeFactoryContext context = null;
     private int depth;
-    private static final int DEFAULT_DEPTH = 64;
 
     private NodeViewTreeBuilder(@NotNull Path root) {
         this.root = root;
@@ -61,6 +62,17 @@ public class NodeViewTreeBuilder {
     private NodeView buildRecursively(Path path, NodeFactory factory, ExceptionTracer tracer, int currentDepth) {
         if (currentDepth == depth) return null;
         ArrayList<NodeView> children = null;
+
+        try {
+            path = path.toRealPath(LinkOption.NOFOLLOW_LINKS);
+        } catch (IOException e) {
+            tracer.put(e);
+            return null;
+        }
+
+        if (Files.isSymbolicLink(path) && Boolean.FALSE.equals(context.jduOptions().getSymbolicLinkFollow())) {
+            return factory.get(path, null, tracer);
+        }
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(path)) {
             children = new ArrayList<>();
             for (Path childPath : stream) {
@@ -71,11 +83,6 @@ public class NodeViewTreeBuilder {
             }
         } catch (IOException ignored) {
         }
-        try {
-            return factory.get(path.toRealPath(), children, tracer);
-        } catch (IOException e) {
-            tracer.put(e);
-            return factory.get(path, children, tracer);
-        }
+        return factory.get(path, children, tracer);
     }
 }

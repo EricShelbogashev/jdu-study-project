@@ -9,7 +9,7 @@ public class SizeFormatterIEC implements SizeFormatter {
     }
 
     /**
-     * @param size  size in bytes.
+     * @param size size in bytes.
      * @return string representation of a size in Bytes, KiB, MiB, GiB.
      */
     @Override

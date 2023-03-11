@@ -21,14 +21,6 @@ public abstract class AbstractNode implements Node {
         this.path = path;
         this.size = Size.SIZE_UNKNOWN;
         this.isRelativeSize = Boolean.TRUE;
-        if (children != null) {
-            long size = 0;
-            for (NodeView node : children) {
-                size += node.size().getValue();
-                if (node.isRelativeSize()) isRelativeSize = Boolean.TRUE;
-            }
-            this.size = new Size(size);
-        }
         this.children = children;
     }
 
