@@ -32,7 +32,7 @@ public class NodeViewTreePrinterTree extends AbstractNodeViewTreePrinter {
                 formatter.format(
                         " ".repeat((int) (align * (node.path().getNameCount() - offset))) + "%s%s" + " ".repeat((int) align) + "[%s]\n",
                         node.type().contains("directory") ? "/" : "",
-                        node.path().getName(node.path().getNameCount() - 1),
+                        node.path().getFileName(),
                         node.size().getString(this.sizeFormatter)).toString().getBytes()
         );
     }

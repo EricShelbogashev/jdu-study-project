@@ -6,6 +6,7 @@ import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.factory.*;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.handler.DirectoryNodeHandler;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.handler.RegularFileNodeHandler;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.handler.SymbolicLinkNodeHandler;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.handler.UnknownPathTypeNodeHandler;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.node.NodeView;
 
 import java.io.IOException;
@@ -47,7 +48,8 @@ public class NodeViewTreeBuilder {
         NodeFactoryConfiguration configuration = new NodeFactoryConfiguration(Arrays.asList(
                 new DirectoryNodeHandler(),
                 new RegularFileNodeHandler(),
-                new SymbolicLinkNodeHandler()
+                new SymbolicLinkNodeHandler(),
+                new UnknownPathTypeNodeHandler()
         ));
         NodeFactory factory = new NodeFactory(configuration, context);
         depth = context.jduOptions().getDepth() == null ? DEFAULT_DEPTH : context.jduOptions().getDepth();
