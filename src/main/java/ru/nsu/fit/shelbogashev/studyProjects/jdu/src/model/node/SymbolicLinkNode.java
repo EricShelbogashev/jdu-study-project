@@ -12,13 +12,13 @@ import java.util.Collection;
 
 public class SymbolicLinkNode extends AbstractNode {
     public SymbolicLinkNode(Path path, Collection<NodeView> children, SymbolicLinkBehavior behaviour) throws IOException {
-        super(path, behaviour == SymbolicLinkBehavior.LIKE_A_DIRECTORY ? children : null);
+        super(path, behaviour == SymbolicLinkBehavior.LIKE_A_DIRECTORY ? children : null, AtomicType.SYMBOLIC_LINK);
         BasicFileAttributes attributes = Files.readAttributes(path, BasicFileAttributes.class, LinkOption.NOFOLLOW_LINKS);
         this.size = new Size(attributes.size());
     }
 
     @Override
-    public @NotNull String type() {
+    public @NotNull String specifiedType() {
         return "symbolic link file";
     }
 }

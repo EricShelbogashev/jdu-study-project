@@ -11,7 +11,10 @@ public interface NodeView extends Comparable<Node> {
     Path path();
 
     @NotNull
-    String type();
+    String specifiedType();
+
+    @NotNull
+    AtomicType atomicType();
 
     @NotNull
     Boolean isRelativeSize();

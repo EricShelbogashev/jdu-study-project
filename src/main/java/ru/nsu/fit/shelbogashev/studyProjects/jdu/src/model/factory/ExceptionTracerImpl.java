@@ -11,9 +11,10 @@ public class ExceptionTracerImpl implements ExceptionTracer {
 
     @Override
     public void put(Throwable throwable) {
-
+        list.add(throwable);
     }
 
+    @SuppressWarnings("unused")
     public ArrayList<Throwable> getList() {
         return list;
     }

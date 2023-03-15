@@ -11,11 +11,11 @@ import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.options.exception.JduOption
 import java.nio.file.Path;
 
 public class JduOptionsBuilder {
-    public static DefaultParser DEFAULT_PARSER = new DefaultParser();
-    public static Integer DEFAULT_DEPTH = 64;
-    public static Integer DEFAULT_LIMIT = Integer.MAX_VALUE;
-    public static Boolean DEFAULT_SYMBOLIC_LINK_FOLLOW = Boolean.FALSE;
-    public static Path DEFAULT_PATH = Path.of(".");
+    public static final DefaultParser DEFAULT_PARSER = new DefaultParser();
+    public static final Integer DEFAULT_DEPTH = 64;
+    public static final Integer DEFAULT_LIMIT = Integer.MAX_VALUE;
+    public static final Boolean DEFAULT_SYMBOLIC_LINK_FOLLOW = Boolean.FALSE;
+    public static final Path DEFAULT_PATH = Path.of(".");
 
     public String[] args;
     public CommandLineParser parser;
@@ -36,7 +36,7 @@ public class JduOptionsBuilder {
     /**
      * Used for initialization by command line input.
      *
-     * @param args flags and values from {@link JduOptions#usage()}.
+     * @param args flags and values from {@link JduOptionsImpl#usage()}.
      * @return this.
      */
     @SuppressWarnings("unused")
@@ -102,7 +102,7 @@ public class JduOptionsBuilder {
     }
 
     /**
-     * @return {@link JduOptions}   instance with data entered by the user.
+     * @return {@link JduOptionsImpl}   instance with data entered by the user.
      * Anything not entered is filled in with default values.
      * @throws JduOptionsException wrapper for all sorts of internal errors.
      */
@@ -113,7 +113,7 @@ public class JduOptionsBuilder {
 
         if (this.args != null) {
             try {
-                CommandLine commandLine = this.parser.parse(JduOptions.commandLineOptions(), args);
+                CommandLine commandLine = this.parser.parse(JduOptionsImpl.commandLineOptions(), args);
                 if (commandLine.getArgList().size() == 1) {
                     this.path = Path.of(commandLine.getArgList().get(0));
                 } else if (commandLine.getArgList().size() == 0) {
@@ -133,6 +133,6 @@ public class JduOptionsBuilder {
         if (this.symbolicLinkFollow == null) this.symbolicLinkFollow = DEFAULT_SYMBOLIC_LINK_FOLLOW;
         if (this.limit == null) this.limit = DEFAULT_LIMIT;
         if (this.path == null) this.path = DEFAULT_PATH;
-        return new JduOptions(this);
+        return new JduOptionsImpl(this);
     }
 }

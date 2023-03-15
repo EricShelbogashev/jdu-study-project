@@ -12,15 +12,15 @@ import java.util.TreeSet;
 
 public class NodeFactory {
     public final Collection<NodeHandler> units;
-    private final NodeFactoryContext context;
+    private final NodeFactoryConfiguration configuration;
 
     /**
      * Factory for creating {@link NodeViewTree#root()} nodes.
+     * Uses a comparator that sorts handlers in ascending priority, and for the same priority, the order is preserved.
      *
-     * @param configuration supplies node handlers.
-     * @param context       supplies jdu options for node creation specification.
+     * @param configuration supplies node handlers and jdu options for node creation specification.
      */
-    public NodeFactory(NodeFactoryConfiguration configuration, NodeFactoryContext context) {
+    public NodeFactory(NodeFactoryConfiguration configuration) {
         this.units = new TreeSet<>((handler1, handler2) -> {
             if (handler2.order() == handler1.order()) {
                 if (handler1.equals(handler2)) return 0;
@@ -28,7 +28,7 @@ public class NodeFactory {
             }
             return handler1.order() - handler2.order();
         });
-        this.context = context;
+        this.configuration = configuration;
         this.units.addAll(configuration.handlers());
     }
 
@@ -43,7 +43,7 @@ public class NodeFactory {
      */
     public @NotNull Node get(Path path, Collection<NodeView> children, ExceptionTracer exceptionTracer) throws NodeFactoryException {
         for (NodeHandler handler : this.units) {
-            Node node = handler.createNode(path, children, context, exceptionTracer);
+            Node node = handler.createNode(path, children, configuration, exceptionTracer);
             if (node != null) return node;
         }
         throw new NodeFactoryException("undefined path reference");

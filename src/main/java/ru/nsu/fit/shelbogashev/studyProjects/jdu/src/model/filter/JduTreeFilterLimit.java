@@ -7,6 +7,7 @@ import java.util.List;
 /**
  * Sorts the child nodes of the node in descending order and leaves limit - the rest are deleted.
  */
+@SuppressWarnings("ALL")
 public class JduTreeFilterLimit implements JduTreeFilter {
     private final int limit;
 
@@ -25,8 +26,7 @@ public class JduTreeFilterLimit implements JduTreeFilter {
         for (NodeView child : root.children()) {
             cutTreeByChildCount(child);
         }
-        List<NodeView> newChildren = root.children().stream().sorted().toList();
-        if (newChildren.size() > limit) newChildren = newChildren.subList(0, limit);
+        List<NodeView> newChildren = root.children().stream().sorted().limit(limit).toList();
         root.children().clear();
         root.children().addAll(newChildren);
     }

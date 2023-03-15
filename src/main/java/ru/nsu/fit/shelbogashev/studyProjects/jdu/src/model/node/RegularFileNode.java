@@ -11,17 +11,16 @@ import java.util.Collection;
 public class RegularFileNode extends AbstractNode {
 
     public RegularFileNode(Path path, Collection<NodeView> children) throws IOException {
-        super(path, children);
-        this.size = new Size(Files.size(path));
+        this(path, children, new Size(Files.size(path)));
     }
 
     public RegularFileNode(Path path, Collection<NodeView> children, Size size) {
-        super(path, children);
+        super(path, children, AtomicType.REGULAR_FILE);
         this.size = size;
     }
 
     @Override
-    public @NotNull String type() {
+    public @NotNull String specifiedType() {
         return "regular file";
     }
 }

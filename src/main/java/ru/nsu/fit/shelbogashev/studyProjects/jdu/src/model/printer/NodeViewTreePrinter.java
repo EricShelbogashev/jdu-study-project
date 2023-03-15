@@ -6,9 +6,10 @@ import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.printer.exception.Nod
 import java.io.OutputStream;
 
 public interface NodeViewTreePrinter {
-    void printTo(OutputStream stream, NodeView root) throws NodeViewTreePrinterException;
+    void printTo(OutputStream stream, NodeView root, NodeViewTreePrinterOptions options) throws NodeViewTreePrinterException;
 
-    default void print(NodeView root) throws NodeViewTreePrinterException {
-        printTo(System.out, root);
+    @SuppressWarnings("unused")
+    default void print(NodeView root, NodeViewTreePrinterOptions options) throws NodeViewTreePrinterException {
+        printTo(System.out, root, options);
     }
 }

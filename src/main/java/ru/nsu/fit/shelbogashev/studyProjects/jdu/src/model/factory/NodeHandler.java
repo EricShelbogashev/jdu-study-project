@@ -11,7 +11,7 @@ import java.util.Collection;
 public interface NodeHandler {
     Node createNode(@NotNull Path path,
                     @Nullable Collection<NodeView> children,
-                    @Nullable NodeFactoryContext context,
+                    @Nullable NodeFactoryConfiguration context,
                     @NotNull ExceptionTracer exceptionTracer);
 
     default int order() {

@@ -10,7 +10,7 @@ import java.util.Collection;
 public class DirectoryNode extends AbstractNode {
 
     public DirectoryNode(Path path, Collection<NodeView> children) {
-        super(path, children);
+        super(path, children, AtomicType.DIRECTORY);
         if (children != null) {
             long size = 0;
             for (NodeView node : children) {
@@ -22,7 +22,7 @@ public class DirectoryNode extends AbstractNode {
     }
 
     @Override
-    public @NotNull String type() {
+    public @NotNull String specifiedType() {
         return "directory";
     }
 }

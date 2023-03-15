@@ -7,19 +7,11 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public abstract class AbstractNodeViewTreePrinter implements NodeViewTreePrinter {
-    protected static final long DEFAULT_PATH_ALIGN = 128;
-    protected final long align;
+    int limit;
+    int depth;
+    boolean symbolicLinkFollow;
 
     public AbstractNodeViewTreePrinter() {
-        this(DEFAULT_PATH_ALIGN);
-    }
-
-    /**
-     * @param align a padding between certain node attributes.
-     *              Each formatter is defined separately.
-     */
-    public AbstractNodeViewTreePrinter(long align) {
-        this.align = align;
     }
 
     /**
@@ -30,20 +22,22 @@ public abstract class AbstractNodeViewTreePrinter implements NodeViewTreePrinter
      * @throws NodeViewTreePrinterException if stream is invalid.
      */
     @Override
-    public void printTo(OutputStream stream, NodeView root) throws NodeViewTreePrinterException {
-        printRecursive(stream, root);
+    public void printTo(OutputStream stream, NodeView root, NodeViewTreePrinterOptions options) throws NodeViewTreePrinterException {
+        this.limit = options.limit();
+        this.depth = options.depth();
+        this.symbolicLinkFollow = options.symbolicLinkFollow();
+        printRecursive(stream, root, 0);
     }
 
-    protected void printRecursive(OutputStream stream, NodeView root) throws NodeViewTreePrinterException {
+    protected void printRecursive(OutputStream stream, NodeView root, int currentDepth) throws NodeViewTreePrinterException {
+        if (currentDepth == depth) return;
         try {
             printNode(stream, root);
         } catch (IOException e) {
             throw new NodeViewTreePrinterException(e);
         }
         if (root.children() == null) return;
-        for (NodeView node : root.children().stream().sorted().toList()) {
-            printRecursive(stream, node);
-        }
+        root.children().stream().sorted().limit(limit).forEach(node -> printRecursive(stream, node, currentDepth + 1));
     }
 
     /**

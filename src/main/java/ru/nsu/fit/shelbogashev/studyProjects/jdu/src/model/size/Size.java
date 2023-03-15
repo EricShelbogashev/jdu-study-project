@@ -9,7 +9,7 @@ public class Size {
     public static Size SIZE_UNKNOWN = new Size(0) {
         @Override
         public String getString(SizeFormatter formatter) {
-            return "NaN";
+            return "unknown";
         }
     };
     private final long value;

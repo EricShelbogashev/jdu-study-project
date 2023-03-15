@@ -1,39 +1,45 @@
 package ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.printer;
 
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.node.AtomicType;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.node.NodeView;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.printer.exception.NodeViewTreePrinterException;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.size.SizeFormatter;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Formatter;
 
 public class NodeViewTreePrinterTree extends AbstractNodeViewTreePrinter {
-    protected static final long DEFAULT_PATH_ALIGN = 2;
+    protected static final int DEFAULT_PATH_ALIGN = 2;
     private final SizeFormatter sizeFormatter;
+    private final int align;
     private int offset;
 
     public NodeViewTreePrinterTree(SizeFormatter formatter) {
-        super(DEFAULT_PATH_ALIGN);
+        this(formatter, DEFAULT_PATH_ALIGN);
+    }
+
+
+    public NodeViewTreePrinterTree(SizeFormatter formatter, int align) {
         this.sizeFormatter = formatter;
         this.offset = 0;
+        this.align = align;
     }
 
     @Override
-    public void printTo(OutputStream stream, NodeView root) throws NodeViewTreePrinterException {
+    public void printTo(OutputStream stream, NodeView root, NodeViewTreePrinterOptions options) throws NodeViewTreePrinterException {
         offset = root.path().getNameCount();
-        super.printRecursive(stream, root);
+        super.printTo(stream, root, options);
     }
 
     @Override
     public void printNode(OutputStream stream, NodeView node) throws IOException {
-        Formatter formatter = new Formatter();
         stream.write(
-                formatter.format(
-                        " ".repeat((int) (align * (node.path().getNameCount() - offset))) + "%s%s" + " ".repeat((int) align) + "[%s]\n",
-                        node.type().contains("directory") ? "/" : "",
+                String.format(
+                        " ".repeat(align * (node.path().getNameCount() - offset)) + "%s%s" + " ".repeat(align) + "[%s]\n",
+
+                        node.atomicType() == AtomicType.DIRECTORY ? "/" : "",
                         node.path().getFileName(),
-                        node.size().getString(this.sizeFormatter)).toString().getBytes()
+                        node.size().getString(this.sizeFormatter)).getBytes()
         );
     }
 }
