@@ -7,8 +7,8 @@ import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.node.Node;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.node.NodeView;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.TreeSet;
 
 public class NodeFactory {
     public final Collection<NodeHandler> units;
@@ -21,15 +21,8 @@ public class NodeFactory {
      * @param configuration supplies node handlers and jdu options for node creation specification.
      */
     public NodeFactory(NodeFactoryConfiguration configuration) {
-        this.units = new TreeSet<>((handler1, handler2) -> {
-            if (handler2.order() == handler1.order()) {
-                if (handler1.equals(handler2)) return 0;
-                return 1;
-            }
-            return handler1.order() - handler2.order();
-        });
+        this.units = new ArrayList<>(configuration.handlers()).stream().sorted(((o1, o2) -> o2.order() - o1.order())).toList();
         this.configuration = configuration;
-        this.units.addAll(configuration.handlers());
     }
 
     /**
