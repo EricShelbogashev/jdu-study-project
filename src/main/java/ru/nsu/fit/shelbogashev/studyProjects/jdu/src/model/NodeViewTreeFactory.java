@@ -1,7 +1,9 @@
 package ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model;
 
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.factory.ExceptionTracer;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.factory.ExceptionTracerImpl;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.factory.NodeFactory;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.factory.NodeFactoryConfiguration;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.node.NodeView;
 
 import java.io.IOException;
@@ -11,18 +13,21 @@ import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
-public class NodeViewTreeBuildRecursivelyActionImpl implements NodeViewTreeBuildRecursivelyAction {
+public class NodeViewTreeFactory {
     private final int depth;
+    private final NodeFactory factory;
     private final boolean symbolicLinkFollow;
 
-    public NodeViewTreeBuildRecursivelyActionImpl(int depth, boolean symbolicLinkFollow) {
+    public NodeViewTreeFactory(int depth, boolean symbolicLinkFollow, NodeFactoryConfiguration configuration) {
         this.depth = depth;
+        this.factory = new NodeFactory(configuration);
         this.symbolicLinkFollow = symbolicLinkFollow;
     }
 
-    @Override
-    public NodeView apply(Path path, NodeFactory factory, ExceptionTracer tracer) {
-        return buildRecursively(path, factory, tracer, 0);
+    public NodeViewTree get(Path path) {
+        ExceptionTracer tracer = new ExceptionTracerImpl();
+        NodeView root = buildRecursively(path, factory, tracer, 0);
+        return new NodeViewTree(root);
     }
 
     private NodeView buildRecursively(Path path, NodeFactory factory, ExceptionTracer tracer, int currentDepth) {

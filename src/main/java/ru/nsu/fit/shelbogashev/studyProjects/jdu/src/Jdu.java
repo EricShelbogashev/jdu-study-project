@@ -1,6 +1,7 @@
 package ru.nsu.fit.shelbogashev.studyProjects.jdu.src;
 
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.NodeViewTree;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.NodeViewTreeFactory;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.factory.NodeFactoryConfigurationImpl;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.handler.DirectoryNodeHandler;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.handler.RegularFileNodeHandler;
@@ -32,12 +33,14 @@ public final class Jdu {
      * @param stream Stream to output the fingerprint in string format.
      */
     public void renderTo(OutputStream stream) {
-        NodeViewTree tree = new NodeViewTree(options.path(), new NodeFactoryConfigurationImpl(options, Arrays.asList(
+        NodeViewTreeFactory factory = new NodeViewTreeFactory(
+                options.depth(), options.symbolicLinkFollow(), new NodeFactoryConfigurationImpl(options, Arrays.asList(
                 new DirectoryNodeHandler(),
                 new RegularFileNodeHandler(),
                 new SymbolicLinkNodeHandler(),
                 new UnknownPathTypeNodeHandler()
         )));
+        NodeViewTree tree = factory.get(options.path());
         NodeViewTreePrinter printer = new NodeViewTreePrinterTree(new SizeFormatterIEC());
         printer.printTo(stream, tree.root(), new NodeViewTreePrinterOptionsImpl(
                 options.limit(),
