@@ -25,6 +25,7 @@ public class NodeViewTreeBuildRecursivelyActionImpl implements NodeViewTreeBuild
         return buildRecursively(path, factory, tracer, 0);
     }
 
+    // CR: move to fields arguments that do not change
     private NodeView buildRecursively(Path path, NodeFactory factory, ExceptionTracer tracer, int currentDepth) {
         if (currentDepth == depth) return null;
         ArrayList<NodeView> children = null;
@@ -36,6 +37,14 @@ public class NodeViewTreeBuildRecursivelyActionImpl implements NodeViewTreeBuild
             return null;
         }
 
+        // CR: hashset / hashmap visited
+        // foo
+        //  slink -> foo
+
+        // foo
+        //   slink -> bar
+        // bar
+        //   slink1 -> foo
         if (Files.isSymbolicLink(path) && Boolean.FALSE.equals(symbolicLinkFollow)) {
             return factory.get(path, null, tracer);
         }
@@ -48,6 +57,7 @@ public class NodeViewTreeBuildRecursivelyActionImpl implements NodeViewTreeBuild
                 }
             }
         } catch (IOException e) {
+            // CR: also create unknown node for tree
             tracer.put(e);
         }
         return factory.get(path, children, tracer);

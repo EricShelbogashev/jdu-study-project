@@ -22,6 +22,7 @@ public interface NodeView extends Comparable<Node> {
     @NotNull
     Size size();
 
+    // CR: should be in separate interface
     Collection<NodeView> children();
 
     @Override

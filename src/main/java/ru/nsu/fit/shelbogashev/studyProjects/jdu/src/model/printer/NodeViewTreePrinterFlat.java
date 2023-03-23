@@ -6,7 +6,7 @@ import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.size.SizeFormatter;
 import java.io.IOException;
 import java.io.OutputStream;
 
-@SuppressWarnings("ALL")
+@SuppressWarnings("unused")
 public class NodeViewTreePrinterFlat extends AbstractNodeViewTreePrinter {
     private final SizeFormatter sizeFormatter;
     private final int align;

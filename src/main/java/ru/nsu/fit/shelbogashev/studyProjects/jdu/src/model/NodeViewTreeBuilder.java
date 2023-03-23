@@ -37,6 +37,7 @@ public class NodeViewTreeBuilder {
      */
     public NodeViewTree build() throws NodeViewTreeBuilderException {
         ExceptionTracerImpl tracer = new ExceptionTracerImpl();
+        // CR: two arguments in build
         if (configuration == null) throw new NodeViewTreeBuilderException("configuration is required");
         NodeFactory factory = new NodeFactory(configuration);
         NodeViewTreeBuildRecursivelyAction actionBuild = new NodeViewTreeBuildRecursivelyActionImpl(

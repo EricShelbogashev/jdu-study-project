@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.util.Collection;
 
 public interface Node extends Comparable<Node>, NodeView {
+    // CR: not used
     void setPath(Path path);
 
     void setIsRelativeSize(Boolean isRelativeSize);

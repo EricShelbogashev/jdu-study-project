@@ -1,9 +1,10 @@
 package ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.factory;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ExceptionTracerImpl implements ExceptionTracer {
-    private final ArrayList<Throwable> list;
+    private final List<Throwable> list;
 
     public ExceptionTracerImpl() {
         this.list = new ArrayList<>();
@@ -15,7 +16,7 @@ public class ExceptionTracerImpl implements ExceptionTracer {
     }
 
     @SuppressWarnings("unused")
-    public ArrayList<Throwable> getList() {
+    public List<Throwable> getList() {
         return list;
     }
 }

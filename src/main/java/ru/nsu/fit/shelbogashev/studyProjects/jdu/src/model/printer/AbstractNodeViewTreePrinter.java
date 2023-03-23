@@ -11,9 +11,6 @@ public abstract class AbstractNodeViewTreePrinter implements NodeViewTreePrinter
     int depth;
     boolean symbolicLinkFollow;
 
-    public AbstractNodeViewTreePrinter() {
-    }
-
     /**
      * Prints the tree to the stream using special formatting.
      *
@@ -37,7 +34,10 @@ public abstract class AbstractNodeViewTreePrinter implements NodeViewTreePrinter
             throw new NodeViewTreePrinterException(e);
         }
         if (root.children() == null) return;
-        root.children().stream().sorted().limit(limit).forEach(node -> printRecursive(stream, node, currentDepth + 1));
+        root.children().stream()
+                .sorted()
+                .limit(limit)
+                .forEach(node -> printRecursive(stream, node, currentDepth + 1));
     }
 
     /**

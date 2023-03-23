@@ -3,6 +3,7 @@ package ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.size;
 /**
  * Formats bytes using the IEC 60027-2-2015 standard.
  */
+// CR: add ISU
 public class SizeFormatterIEC implements SizeFormatter {
     private static String getFormatString(double value, String suffix) {
         return String.format("%.2f %s", value, suffix);

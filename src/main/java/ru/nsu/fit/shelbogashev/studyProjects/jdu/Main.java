@@ -12,8 +12,8 @@ public class Main {
             Jdu jdu = new Jdu(options);
             jdu.render();
         } catch (JduOptionsException e) {
-            System.out.println("Caught exception: " + e);
-            System.out.println(JduOptionsImpl.usage());
+            System.err.println("Caught exception: " + e);
+            System.err.println(JduOptionsImpl.usage());
         }
     }
 }

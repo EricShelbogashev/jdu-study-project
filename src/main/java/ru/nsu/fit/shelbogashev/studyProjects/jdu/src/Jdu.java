@@ -43,6 +43,8 @@ public final class Jdu {
                 )
                 ))
                 .build();
+        // CR: show tracer errors
+        // CR: NodeViewTree -> TreeBuilderResult
         NodeView root = tree.root();
         NodeViewTreePrinter printer = new NodeViewTreePrinterTree(new SizeFormatterIEC());
         printer.printTo(stream, root, new NodeViewTreePrinterOptionsImpl(

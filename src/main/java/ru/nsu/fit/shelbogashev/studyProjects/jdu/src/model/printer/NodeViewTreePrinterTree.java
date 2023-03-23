@@ -9,7 +9,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class NodeViewTreePrinterTree extends AbstractNodeViewTreePrinter {
+    // CR: rename
     protected static final int DEFAULT_PATH_ALIGN = 2;
+    // CR: add PrinterFormatter with SizeFormatter and TreeFormatter inside
     private final SizeFormatter sizeFormatter;
     private final int align;
     private int offset;

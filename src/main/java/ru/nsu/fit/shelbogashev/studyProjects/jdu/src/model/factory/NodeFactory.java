@@ -8,10 +8,13 @@ import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.node.NodeView;
 
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.TreeSet;
 
+// CR: merge NodeViewTreeBuildRecursivelyAction here
 public class NodeFactory {
-    public final Collection<NodeHandler> units;
+    public final Collection<NodeHandler> handlers;
     private final NodeFactoryConfiguration configuration;
 
     /**
@@ -21,7 +24,9 @@ public class NodeFactory {
      * @param configuration supplies node handlers and jdu options for node creation specification.
      */
     public NodeFactory(NodeFactoryConfiguration configuration) {
-        this.units = new TreeSet<>((handler1, handler2) -> {
+        // CR: use standard Comparator.comparing(NodeHandler::order);
+        // CR: use list, Collections.sort();
+        this.handlers = new TreeSet<>((handler1, handler2) -> {
             if (handler2.order() == handler1.order()) {
                 if (handler1.equals(handler2)) return 0;
                 return 1;
@@ -29,7 +34,7 @@ public class NodeFactory {
             return handler1.order() - handler2.order();
         });
         this.configuration = configuration;
-        this.units.addAll(configuration.handlers());
+        this.handlers.addAll(configuration.handlers());
     }
 
     /**
@@ -42,7 +47,7 @@ public class NodeFactory {
      * @throws NodeFactoryException if a handler for creating a node was not found.
      */
     public @NotNull Node get(Path path, Collection<NodeView> children, ExceptionTracer exceptionTracer) throws NodeFactoryException {
-        for (NodeHandler handler : this.units) {
+        for (NodeHandler handler : this.handlers) {
             Node node = handler.createNode(path, children, configuration, exceptionTracer);
             if (node != null) return node;
         }

@@ -19,11 +19,13 @@ public class JduOptionsBuilder {
 
     public String[] args;
     public CommandLineParser parser;
+    // CR: init with default
     public Integer depth;
     public Boolean symbolicLinkFollow;
     public Integer limit;
     public Path path;
 
+    // CR: one more ctor with parser argument
     public JduOptionsBuilder() {
         this.args = null;
         this.parser = null;
@@ -111,6 +113,7 @@ public class JduOptionsBuilder {
     public JduOptions build() throws JduOptionsException {
         if (this.parser == null) this.parser = DEFAULT_PARSER;
 
+        // CR: build overload with args
         if (this.args != null) {
             try {
                 CommandLine commandLine = this.parser.parse(JduOptionsImpl.commandLineOptions(), args);

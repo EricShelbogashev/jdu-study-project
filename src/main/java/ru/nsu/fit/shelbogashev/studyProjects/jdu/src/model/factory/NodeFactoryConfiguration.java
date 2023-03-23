@@ -1,6 +1,7 @@
 package ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.factory;
 
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.options.JduOptions;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.options.JduOptionsImpl;
 
 import java.util.Collection;
 
