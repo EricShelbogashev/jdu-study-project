@@ -14,4 +14,7 @@ public interface Node extends Comparable<Node>, NodeView {
     void setSize(Size size);
 
     void setChildren(Collection<NodeView> children);
+
+    @Override
+    String toString();
 }

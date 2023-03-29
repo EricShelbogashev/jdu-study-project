@@ -1,15 +1,13 @@
 package ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.factory;
 
 import org.jetbrains.annotations.NotNull;
-import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.NodeViewTree;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.TreeBuilderResult;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.factory.exception.NodeFactoryException;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.node.Node;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.node.NodeView;
 
 import java.nio.file.Path;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.TreeSet;
 
 // CR: merge NodeViewTreeBuildRecursivelyAction here
@@ -18,7 +16,7 @@ public class NodeFactory {
     private final NodeFactoryConfiguration configuration;
 
     /**
-     * Factory for creating {@link NodeViewTree#root()} nodes.
+     * Factory for creating {@link TreeBuilderResult#root()} nodes.
      * Uses a comparator that sorts handlers in ascending priority, and for the same priority, the order is preserved.
      *
      * @param configuration supplies node handlers and jdu options for node creation specification.

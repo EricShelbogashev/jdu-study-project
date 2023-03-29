@@ -7,6 +7,7 @@ import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.size.SizeFormatter;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.Files;
 
 public class NodeViewTreePrinterTree extends AbstractNodeViewTreePrinter {
     // CR: rename
@@ -35,12 +36,15 @@ public class NodeViewTreePrinterTree extends AbstractNodeViewTreePrinter {
 
     @Override
     public void printNode(OutputStream stream, NodeView node) throws IOException {
+        String filename = String.valueOf(node.path().getFileName());
+        if (node.atomicType() == AtomicType.SYMBOLIC_LINK) {
+            filename += " -> " + Files.readSymbolicLink(node.path());
+        }
         stream.write(
                 String.format(
                         " ".repeat(align * (node.path().getNameCount() - offset)) + "%s%s" + " ".repeat(align) + "[%s]\n",
-
                         node.atomicType() == AtomicType.DIRECTORY ? "/" : "",
-                        node.path().getFileName(),
+                        filename,
                         node.size().getString(this.sizeFormatter)).getBytes()
         );
     }

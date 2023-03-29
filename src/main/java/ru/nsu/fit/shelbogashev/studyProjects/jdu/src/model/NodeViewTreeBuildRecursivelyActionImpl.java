@@ -7,17 +7,19 @@ import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.node.NodeView;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
-import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class NodeViewTreeBuildRecursivelyActionImpl implements NodeViewTreeBuildRecursivelyAction {
     private final int depth;
     private final boolean symbolicLinkFollow;
+    private final HashSet<Path> visited;
 
     public NodeViewTreeBuildRecursivelyActionImpl(int depth, boolean symbolicLinkFollow) {
         this.depth = depth;
         this.symbolicLinkFollow = symbolicLinkFollow;
+        this.visited = new HashSet<>();
     }
 
     @Override
@@ -31,21 +33,18 @@ public class NodeViewTreeBuildRecursivelyActionImpl implements NodeViewTreeBuild
         ArrayList<NodeView> children = null;
 
         try {
-            path = path.toRealPath(LinkOption.NOFOLLOW_LINKS);
+            Path realPath = path.toRealPath();
+            if (visited.contains(realPath)) return factory.get(path, null, tracer);
+            visited.add(realPath);
         } catch (IOException e) {
             tracer.put(e);
             return null;
         }
 
-        // CR: hashset / hashmap visited
-        // foo
-        //  slink -> foo
-
-        // foo
-        //   slink -> bar
-        // bar
-        //   slink1 -> foo
         if (Files.isSymbolicLink(path) && Boolean.FALSE.equals(symbolicLinkFollow)) {
+            return factory.get(path, null, tracer);
+        }
+        if (!Files.isDirectory(path)) {
             return factory.get(path, null, tracer);
         }
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(path)) {
@@ -57,7 +56,6 @@ public class NodeViewTreeBuildRecursivelyActionImpl implements NodeViewTreeBuild
                 }
             }
         } catch (IOException e) {
-            // CR: also create unknown node for tree
             tracer.put(e);
         }
         return factory.get(path, children, tracer);

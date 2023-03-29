@@ -22,4 +22,9 @@ public class DirectoryNodeHandler implements NodeHandler {
         if (Files.isSymbolicLink(path)) return null;
         return new DirectoryNode(path, children);
     }
+
+    @Override
+    public int order() {
+        return Integer.MAX_VALUE;
+    }
 }

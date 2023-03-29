@@ -4,7 +4,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
 
-// CR: remove interface, add method NodeFactoryConfiguration#options()
 public interface JduOptions {
     @NotNull Integer depth();
 
