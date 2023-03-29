@@ -1,7 +1,6 @@
 package ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.node;
 
-import org.jetbrains.annotations.NotNull;
-import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.size.Size;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.formatter.Size;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -19,8 +18,4 @@ public class RegularFileNode extends AbstractNode {
         this.size = size;
     }
 
-    @Override
-    public @NotNull String specifiedType() {
-        return "regular file";
-    }
 }

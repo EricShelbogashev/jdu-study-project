@@ -1,16 +1,15 @@
 package ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.node;
 
 import org.jetbrains.annotations.NotNull;
-import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.size.Size;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.formatter.Size;
 
 import java.nio.file.Path;
 import java.util.Collection;
 
 /**
  * Implements the core functionality of the Node.
- * It is necessary to redefine the type for {@link NodeView#specifiedType()} and add a {@link ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.factory.NodeHandler handler} for this node.
  */
-public abstract class AbstractNode implements Node {
+public abstract class AbstractNode implements NodeView {
 
     protected Path path;
     protected Boolean isRelativeSize;
@@ -47,7 +46,7 @@ public abstract class AbstractNode implements Node {
     }
 
     @Override
-    public int compareTo(@NotNull Node o) {
+    public int compareTo(@NotNull NodeView o) {
         if (this.equals(o)) return 0;
         if (o.size() == this.size()) return o.path().compareTo(this.path);
         return (int) (o.size().getValue() - this.size.getValue());
@@ -56,26 +55,6 @@ public abstract class AbstractNode implements Node {
     @Override
     public @NotNull AtomicType atomicType() {
         return type;
-    }
-
-    @Override
-    public void setPath(Path path) {
-        this.path = path;
-    }
-
-    @Override
-    public void setIsRelativeSize(Boolean isRelativeSize) {
-        this.isRelativeSize = isRelativeSize;
-    }
-
-    @Override
-    public void setSize(Size size) {
-        this.size = size;
-    }
-
-    @Override
-    public void setChildren(Collection<NodeView> children) {
-        this.children = children;
     }
 
     @Override

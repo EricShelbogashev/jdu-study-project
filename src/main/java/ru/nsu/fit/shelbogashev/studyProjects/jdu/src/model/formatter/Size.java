@@ -1,4 +1,4 @@
-package ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.size;
+package ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.formatter;
 
 import org.jetbrains.annotations.Range;
 

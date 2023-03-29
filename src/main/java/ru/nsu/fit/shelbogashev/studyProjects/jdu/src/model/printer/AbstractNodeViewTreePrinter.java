@@ -23,7 +23,7 @@ public abstract class AbstractNodeViewTreePrinter implements NodeViewTreePrinter
         this.limit = options.limit();
         this.depth = options.depth();
         this.symbolicLinkFollow = options.symbolicLinkFollow();
-        printRecursive(stream, root, 0);
+        printRecursive(stream, root, -1);
     }
 
     protected void printRecursive(OutputStream stream, NodeView root, int currentDepth) throws NodeViewTreePrinterException {

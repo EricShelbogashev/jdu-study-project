@@ -5,47 +5,30 @@ import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.ParseException;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.options.exception.JduOptionsException;
 
 import java.nio.file.Path;
 
 public class JduOptionsBuilder {
     public static final DefaultParser DEFAULT_PARSER = new DefaultParser();
-    public static final Integer DEFAULT_DEPTH = 64;
-    public static final Integer DEFAULT_LIMIT = Integer.MAX_VALUE;
-    public static final Boolean DEFAULT_SYMBOLIC_LINK_FOLLOW = Boolean.FALSE;
+    public static final int DEFAULT_DEPTH = 64;
+    public static final int DEFAULT_LIMIT = Integer.MAX_VALUE;
+    public static final boolean DEFAULT_SYMBOLIC_LINK_FOLLOW = Boolean.FALSE;
     public static final Path DEFAULT_PATH = Path.of(".");
 
-    public String[] args;
-    public CommandLineParser parser;
-    // CR: init with default
-    public Integer depth;
-    public Boolean symbolicLinkFollow;
-    public Integer limit;
-    public Path path;
+    public CommandLineParser parser = DEFAULT_PARSER;
+    public int depth = DEFAULT_DEPTH;
+    public boolean symbolicLinkFollow = DEFAULT_SYMBOLIC_LINK_FOLLOW;
+    public int limit = DEFAULT_LIMIT;
+    public Path path = DEFAULT_PATH;
 
     // CR: one more ctor with parser argument
     public JduOptionsBuilder() {
-        this.args = null;
-        this.parser = null;
-        this.depth = null;
-        this.symbolicLinkFollow = null;
-        this.limit = null;
-        this.path = null;
     }
 
-    /**
-     * Used for initialization by command line input.
-     *
-     * @param args flags and values from {@link JduOptionsImpl#usage()}.
-     * @return this.
-     */
     @SuppressWarnings("unused")
-    @NotNull
-    public JduOptionsBuilder byArgs(@Nullable String[] args) {
-        this.args = args;
-        return this;
+    public JduOptionsBuilder(CommandLineParser parser) {
+        this.parser = parser;
     }
 
     /**
@@ -54,19 +37,8 @@ public class JduOptionsBuilder {
      */
     @SuppressWarnings("unused")
     @NotNull
-    public JduOptionsBuilder path(@Nullable Path path) {
+    public JduOptionsBuilder path(@NotNull Path path) {
         this.path = path;
-        return this;
-    }
-
-    /**
-     * @param parser parser to use to interpret input from {@link JduOptionsBuilder#byArgs(String[])}
-     * @return this.
-     */
-    @SuppressWarnings("unused")
-    @NotNull
-    public JduOptionsBuilder withParser(@Nullable CommandLineParser parser) {
-        this.parser = parser;
         return this;
     }
 
@@ -77,6 +49,9 @@ public class JduOptionsBuilder {
     @SuppressWarnings("unused")
     @NotNull
     public JduOptionsBuilder depth(int depth) {
+        if (depth < 0) {
+            throw new JduOptionsException("Depth must be greater or equals than 0.");
+        }
         this.depth = depth;
         return this;
     }
@@ -87,7 +62,7 @@ public class JduOptionsBuilder {
      */
     @SuppressWarnings("unused")
     @NotNull
-    public JduOptionsBuilder symbolicLinkFollow(@Nullable Boolean symbolicLinkFollow) {
+    public JduOptionsBuilder symbolicLinkFollow(boolean symbolicLinkFollow) {
         this.symbolicLinkFollow = symbolicLinkFollow;
         return this;
     }
@@ -98,7 +73,10 @@ public class JduOptionsBuilder {
      */
     @SuppressWarnings("unused")
     @NotNull
-    public JduOptionsBuilder limit(@Nullable Integer limit) {
+    public JduOptionsBuilder limit(int limit) {
+        if (limit < 0) {
+            throw new JduOptionsException("Limit must be greater or equals than 0.");
+        }
         this.limit = limit;
         return this;
     }
@@ -110,11 +88,8 @@ public class JduOptionsBuilder {
      */
     @SuppressWarnings("unused")
     @NotNull
-    public JduOptions build() throws JduOptionsException {
-        if (this.parser == null) this.parser = DEFAULT_PARSER;
-
-        // CR: build overload with args
-        if (this.args != null) {
+    public JduOptions buildByArgs(String[] args) throws JduOptionsException {
+        if (args != null) {
             try {
                 CommandLine commandLine = this.parser.parse(JduOptionsImpl.commandLineOptions(), args);
                 if (commandLine.getArgList().size() == 1) {
@@ -131,11 +106,12 @@ public class JduOptionsBuilder {
                 throw new JduOptionsException(e);
             }
         }
+        return new JduOptionsImpl(this);
+    }
 
-        if (this.depth == null) this.depth = DEFAULT_DEPTH;
-        if (this.symbolicLinkFollow == null) this.symbolicLinkFollow = DEFAULT_SYMBOLIC_LINK_FOLLOW;
-        if (this.limit == null) this.limit = DEFAULT_LIMIT;
-        if (this.path == null) this.path = DEFAULT_PATH;
+    @SuppressWarnings("unused")
+    @NotNull
+    public JduOptions build(String[] args) throws JduOptionsException {
         return new JduOptionsImpl(this);
     }
 }

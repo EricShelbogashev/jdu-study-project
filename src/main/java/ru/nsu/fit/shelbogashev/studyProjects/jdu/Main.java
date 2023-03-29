@@ -8,7 +8,7 @@ import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.options.exception.JduOption
 public class Main {
     public static void main(String[] args) {
         try {
-            JduOptions options = JduOptionsImpl.builder().byArgs(args).build();
+            JduOptions options = JduOptionsImpl.builder().buildByArgs(args);
             Jdu jdu = new Jdu(options);
             jdu.render();
         } catch (JduOptionsException e) {

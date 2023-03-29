@@ -1,7 +1,6 @@
 package ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.node;
 
-import org.jetbrains.annotations.NotNull;
-import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.size.Size;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.formatter.Size;
 
 import java.nio.file.Path;
 import java.util.Collection;
@@ -21,8 +20,4 @@ public class DirectoryNode extends AbstractNode {
         }
     }
 
-    @Override
-    public @NotNull String specifiedType() {
-        return "directory";
-    }
 }

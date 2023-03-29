@@ -1,7 +1,6 @@
 package ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.node;
 
-import org.jetbrains.annotations.NotNull;
-import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.size.Size;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.formatter.Size;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,8 +16,4 @@ public class SymbolicLinkNode extends AbstractNode {
         this.size = new Size(attributes.size());
     }
 
-    @Override
-    public @NotNull String specifiedType() {
-        return "symbolic link file";
-    }
 }

@@ -6,7 +6,6 @@ import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.factory.NodeFactoryCo
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.factory.NodeHandler;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.node.AbstractNode;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.node.AtomicType;
-import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.node.Node;
 import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.node.NodeView;
 
 import java.nio.file.Path;
@@ -14,15 +13,11 @@ import java.util.Collection;
 
 public class UnknownPathTypeNodeHandler implements NodeHandler {
     @Override
-    public Node createNode(@NotNull Path path,
-                           Collection<NodeView> children,
-                           NodeFactoryConfiguration configuration,
-                           @NotNull ExceptionTracer exceptionTracer) {
+    public NodeView createNode(@NotNull Path path,
+                               Collection<NodeView> children,
+                               NodeFactoryConfiguration configuration,
+                               @NotNull ExceptionTracer exceptionTracer) {
         return new AbstractNode(path, null, AtomicType.UNKNOWN) {
-            @Override
-            public @NotNull String specifiedType() {
-                return "unknown";
-            }
         };
     }
 

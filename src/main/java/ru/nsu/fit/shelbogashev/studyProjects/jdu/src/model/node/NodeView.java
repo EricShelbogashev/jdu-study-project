@@ -1,17 +1,14 @@
 package ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.node;
 
 import org.jetbrains.annotations.NotNull;
-import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.size.Size;
+import ru.nsu.fit.shelbogashev.studyProjects.jdu.src.model.formatter.Size;
 
 import java.nio.file.Path;
 import java.util.Collection;
 
-public interface NodeView extends Comparable<Node> {
+public interface NodeView extends Comparable<NodeView> {
     @NotNull
     Path path();
-
-    @NotNull
-    String specifiedType();
 
     @NotNull
     AtomicType atomicType();
@@ -22,7 +19,6 @@ public interface NodeView extends Comparable<Node> {
     @NotNull
     Size size();
 
-    // CR: should be in separate interface
     Collection<NodeView> children();
 
     @Override

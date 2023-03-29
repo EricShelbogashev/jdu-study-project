@@ -4,4 +4,8 @@ public class JduOptionsException extends RuntimeException {
     public JduOptionsException(Throwable throwable) {
         super(throwable);
     }
+
+    public JduOptionsException(String message) {
+        super(message);
+    }
 }
